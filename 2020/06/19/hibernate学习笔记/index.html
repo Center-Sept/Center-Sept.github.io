@@ -79,12 +79,14 @@
 
 
 
-<meta name="description" content="每天被自己帅醒的苟且coder">
-<meta property="og:type" content="website">
-<meta property="og:title" content="阿中的blogs">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="入门1）创建项目2）导入jar包3）配置实体类和数据库表一一对应关系 (映射关系)使用配置文件实现映射关系。(1)创建xml格式的配置文件。映射配置文件名称和位置没有固定要求，建议:在实体类所在包里面创建，实体类名称hbm.xml.(2)配置是是xml格式，在配置文件中首先引入xml约束. 1234567891011121314151617181920212223&lt;hibernate- ma">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hibernate学习笔记">
+<meta property="og:url" content="http://yoursite.com/2020/06/19/hibernate%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="阿中的blogs">
-<meta property="og:description" content="每天被自己帅醒的苟且coder">
+<meta property="og:description" content="入门1）创建项目2）导入jar包3）配置实体类和数据库表一一对应关系 (映射关系)使用配置文件实现映射关系。(1)创建xml格式的配置文件。映射配置文件名称和位置没有固定要求，建议:在实体类所在包里面创建，实体类名称hbm.xml.(2)配置是是xml格式，在配置文件中首先引入xml约束. 1234567891011121314151617181920212223&lt;hibernate- ma">
+<meta property="article:published_time" content="2020-06-19T03:44:50.000Z">
+<meta property="article:modified_time" content="2020-06-19T03:45:37.184Z">
 <meta property="article:author" content="Center-Sept">
 <meta property="article:tag" content="java">
 <meta name="twitter:card" content="summary">
@@ -117,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/06/19/hibernate学习笔记/"/>
 
 
 
 
 
-  <title>阿中的blogs</title>
+  <title>hibernate学习笔记 | 阿中的blogs</title>
   
 
 
@@ -152,8 +154,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -256,9 +257,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -288,9 +289,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/06/19/hibernate%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url">hibernate学习笔记</a></h1>
+          <h1 class="post-title" itemprop="name headline">hibernate学习笔记</h1>
         
 
         <div class="post-meta">
@@ -340,9 +339,7 @@
       
 
       
-        
-          
-            <h2 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h2><p>1）创建项目<br>2）导入jar包<br>3）配置实体类和数据库表一一对应关系 (映射关系)<br>使用配置文件实现映射关系。<br>(1)创建xml格式的配置文件。<br>映射配置文件名称和位置没有固定要求，<br>建议:在实体类所在包里面创建，实体类名称hbm.xml.<br>(2)配置是是xml格式，在配置文件中首先引入xml约束.</p>
+        <h2 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h2><p>1）创建项目<br>2）导入jar包<br>3）配置实体类和数据库表一一对应关系 (映射关系)<br>使用配置文件实现映射关系。<br>(1)创建xml格式的配置文件。<br>映射配置文件名称和位置没有固定要求，<br>建议:在实体类所在包里面创建，实体类名称hbm.xml.<br>(2)配置是是xml格式，在配置文件中首先引入xml约束.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;hibernate- mapping&gt;</span><br><span class="line">&lt;!-- 1配置类和表对应</span><br><span class="line">class标签</span><br><span class="line">name属性：实体类的全路径</span><br><span class="line">table属性：数据库表名称</span><br><span class="line">--&gt;</span><br><span class="line">&lt;class name&#x3D; ”com.user”table&#x3D;”t_user&quot;&gt;</span><br><span class="line">&lt;!-- 2配置实体类id和表id对应</span><br><span class="line">hibernate要求实体类有一个属性唯一值</span><br><span class="line">hibernate要求表有字段作为唯一值</span><br><span class="line">&lt;id name&#x3D;”uid”colymn&#x3D;&quot;uid&quot;&gt;</span><br><span class="line">&lt;!--设置数据库表id增长策略</span><br><span class="line">native :生成表id值就是主键自动增长</span><br><span class="line">&lt;generator class&#x3D; &quot;native &quot;&gt;&lt;&#x2F; generator&gt;</span><br><span class="line">&lt;&#x2F;id&gt;</span><br><span class="line">&lt;!--配置其他属性和表字段对应</span><br><span class="line">name属性:实体类属性名称</span><br><span class="line">column属性:生成表字段名称</span><br><span class="line">--&gt;</span><br><span class="line">&lt;property name&#x3D; &quot;usgername&quot; column&#x3D; &quot;username &quot;&gt;&lt;&#x2F; property&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;class&gt;</span><br><span class="line">&lt;&#x2F;hibernate -mapping&gt;</span><br></pre></td></tr></table></figure>
 <p>4）创建核心配置文件<br>文件名：必须hibernate.cfg.xml<br>位置：必须src下面<br>1.配置数据库信息<br>2.配置hibernate信息<br>3.把映射文件放到核心配置文件中</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D; &quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt; !DOCTYPE hibernate- configuration PUBLIC</span><br><span class="line">&quot;-&#x2F;&#x2F;Hibernate&#x2F;Hibernate Configuration DTD 3.0&#x2F;&#x2F;EN&quot;</span><br><span class="line">&quot;http: &#x2F;&#x2F;www. hibernate . org&#x2F; dtd&#x2F;hibernate- configuration-3.0. dtd&quot;&gt;</span><br><span class="line">&lt;hibernate- configuration&gt;</span><br><span class="line">&lt;session-factory&gt;</span><br><span class="line">&lt;!--第一部分:配置数据库信息  （必填）--&gt;</span><br><span class="line">&lt;property name&#x3D; &quot;hibernate. connection. driver_ class &quot;&gt;com. mysq1. jdbc . Driver&lt;&#x2F; property&gt;</span><br><span class="line">&lt;property name&#x3D; &quot;hibernate . connect ion. url &quot;&gt;jdbc :mysql:&#x2F;&#x2F;&#x2F;hibernate_ day01&lt;&#x2F; property&gt;</span><br><span class="line">&lt;property name&#x3D; &quot;hibernate . connect ion. username &quot;&gt;root&lt; &#x2F; property&gt;</span><br><span class="line">&lt;property name&#x3D; &quot;hibernate. connection. password &quot;&gt; root&lt;&#x2F; property&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--第二部分:配置hibernate信息 （可选）--&gt;</span><br><span class="line">&lt;!--输出底层sql语句--&gt;</span><br><span class="line">&lt;property name&#x3D; &quot;hibernate. show_ sqL &quot;&gt;true&lt;&#x2F;property&gt;</span><br><span class="line">&lt;!-- 输出底层sq1语句格式--&gt;</span><br><span class="line">&lt;property name&#x3D; &quot;hibernate. format_ sql &quot;&gt;true&lt;&#x2F; property&gt;</span><br><span class="line">&lt;!-- hibernate帮创建表，需要配置之后I</span><br><span class="line">update:如果已经有表，更新，如果没有创建</span><br><span class="line">-- &gt;</span><br><span class="line">&lt;property name&#x3D; &quot;hibernate . hbm2ddL. auto &quot;&gt;update&lt;&#x2F; property&gt;</span><br><span class="line">&lt;!--配置数据库方言</span><br><span class="line">在mysq1里面实现分页关键字limit，只能使用mysql里面</span><br><span class="line">在oracle数据库，实现分页rownum</span><br><span class="line">让hibernate框架识别不同的数据库的自己特有的语句</span><br><span class="line">--&gt;</span><br><span class="line">&lt;property name&#x3D; &quot;hibernate . dialect &quot;&gt;org . hibernate. dialect .MySQLDialect&lt;&#x2F; property&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--第三部分:把映射文件放到核心配置文件中--&gt;</span><br><span class="line">&lt;mapping resource&#x3D; &quot;cn&#x2F;itcast&#x2F;entity&#x2F;User. hbm. xmL &quot;&#x2F;&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;session-factory&gt;</span><br><span class="line">&lt;&#x2F;hibernate- configuration&gt;</span><br></pre></td></tr></table></figure>
@@ -544,8 +541,6 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;查询所有客户</span><br><span class="line">Criteria criteria &#x3D; session.createCriteria(Customer .class);</span><br><span class="line">List&lt;Customer&gt; list &#x3D; criteria.list();</span><br><span class="line">&#x2F;&#x2F;得到每个客户里面所有的联系人</span><br><span class="line">for (Customer customer : list) &#123;</span><br><span class="line">System. out . print1n(customer . getCid()+&quot; ::&quot;+customer . getCustName());</span><br><span class="line">&#x2F;&#x2F;每个客户里面所有的联系人</span><br><span class="line">Set&lt;LinkMan&gt; setLinkMan &#x3D; customer . getSetLinkMan();</span><br><span class="line">for (LinkMan linkMan : setLinkMan) &#123;</span><br><span class="line">System. out. print1n(1inkMan. getLkm_ id()+&quot;::&quot;+linkMan.getLkm name());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>2 在客户的映射文件中，set标签配置<br>(1) batch-size值， 值越大发送语句越少。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;set name&#x3D;&quot;setL inkMan&quot; batch-size&#x3D;&quot;10&quot;&gt;</span><br></pre></td></tr></table></figure>
-          
-        
       
     </div>
     
@@ -553,7 +548,39 @@
     
 
     
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="Center-Sept wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，谢谢订阅大佬爷</div>
+</div>
 
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Donate comment here</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Center-Sept 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
     
 
     
@@ -562,12 +589,12 @@
       
 
       
+      
+      
 
       
 
       
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -577,10 +604,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -588,6 +616,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -608,8 +640,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -667,6 +708,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#入门"><span class="nav-number">1.</span> <span class="nav-text">入门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现添加操作"><span class="nav-number">2.</span> <span class="nav-text">实现添加操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件的详解"><span class="nav-number">3.</span> <span class="nav-text">配置文件的详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#映射配置文件"><span class="nav-number">3.1.</span> <span class="nav-text">映射配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#核心配置文件"><span class="nav-number">3.2.</span> <span class="nav-text">核心配置文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hibernate-核心api"><span class="nav-number">4.</span> <span class="nav-text">hibernate 核心api</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Configuration"><span class="nav-number">4.1.</span> <span class="nav-text">Configuration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SessionFactory-重点"><span class="nav-number">4.2.</span> <span class="nav-text">SessionFactory (重点)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Session-（重点）"><span class="nav-number">4.3.</span> <span class="nav-text">Session （重点）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Transaction"><span class="nav-number">4.4.</span> <span class="nav-text">Transaction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决配置文件没有提示问题。"><span class="nav-number">4.5.</span> <span class="nav-text">解决配置文件没有提示问题。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实体类的编写规则"><span class="nav-number">5.</span> <span class="nav-text">实体类的编写规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hibernate主键生成策略"><span class="nav-number">6.</span> <span class="nav-text">Hibernate主键生成策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实体类操作"><span class="nav-number">7.</span> <span class="nav-text">实体类操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实体类CRUD"><span class="nav-number">8.</span> <span class="nav-text">实体类CRUD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实体类对象状态"><span class="nav-number">9.</span> <span class="nav-text">实体类对象状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hibernate缓存"><span class="nav-number">10.</span> <span class="nav-text">hibernate缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是缓存"><span class="nav-number">10.1.</span> <span class="nav-text">什么是缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hibernate-一级缓存"><span class="nav-number">10.2.</span> <span class="nav-text">Hibernate 一级缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一级缓存的执行过程"><span class="nav-number">10.2.1.</span> <span class="nav-text">一级缓存的执行过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一级缓存的特性"><span class="nav-number">10.2.2.</span> <span class="nav-text">一级缓存的特性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hibernate-二级级缓存"><span class="nav-number">10.3.</span> <span class="nav-text">Hibernate 二级级缓存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hibernate事务代码规范写法"><span class="nav-number">11.</span> <span class="nav-text">Hibernate事务代码规范写法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hibernate绑定session"><span class="nav-number">12.</span> <span class="nav-text">hibernate绑定session</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hibernate的api使用"><span class="nav-number">13.</span> <span class="nav-text">Hibernate的api使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Query对象"><span class="nav-number">13.1.</span> <span class="nav-text">Query对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Criteria对象-已经淘汰"><span class="nav-number">13.2.</span> <span class="nav-text">Criteria对象 (已经淘汰)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SQLQuery对象-（已经过期）"><span class="nav-number">13.3.</span> <span class="nav-text">SQLQuery对象 （已经过期）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表与表之间关系回顾-对多"><span class="nav-number">14.</span> <span class="nav-text">表与表之间关系回顾(- 对多)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hibernate的一对多操作-重点"><span class="nav-number">14.1.</span> <span class="nav-text">Hibernate的一对多操作(重点)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一对多映射配置"><span class="nav-number">14.1.1.</span> <span class="nav-text">一对多映射配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一对多级联操作"><span class="nav-number">14.1.2.</span> <span class="nav-text">一对多级联操作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#级联保存"><span class="nav-number">14.1.2.1.</span> <span class="nav-text">级联保存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#级联删除"><span class="nav-number">14.1.2.2.</span> <span class="nav-text">级联删除</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#一对多修改操作"><span class="nav-number">14.1.2.3.</span> <span class="nav-text">一对多修改操作</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多对多的操作"><span class="nav-number">15.</span> <span class="nav-text">多对多的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多对多映射配置"><span class="nav-number">15.1.</span> <span class="nav-text">多对多映射配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多对多级联保存"><span class="nav-number">15.2.</span> <span class="nav-text">多对多级联保存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多对多级联删除（了解）"><span class="nav-number">15.3.</span> <span class="nav-text">多对多级联删除（了解）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#维护第三张表-关系表"><span class="nav-number">15.4.</span> <span class="nav-text">维护第三张表-关系表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hibernate-查询方式"><span class="nav-number">16.</span> <span class="nav-text">hibernate 查询方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对象导航查询"><span class="nav-number">16.1.</span> <span class="nav-text">对象导航查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OID查询"><span class="nav-number">16.2.</span> <span class="nav-text">OID查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hql-查询"><span class="nav-number">16.3.</span> <span class="nav-text">hql 查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查询所有"><span class="nav-number">16.3.1.</span> <span class="nav-text">查询所有</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#条件查询"><span class="nav-number">16.3.2.</span> <span class="nav-text">条件查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#排序查询"><span class="nav-number">16.3.3.</span> <span class="nav-text">排序查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分页查询"><span class="nav-number">16.3.4.</span> <span class="nav-text">分页查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#投影查询"><span class="nav-number">16.3.5.</span> <span class="nav-text">投影查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#聚集函数查询"><span class="nav-number">16.3.6.</span> <span class="nav-text">聚集函数查询</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#QBC查询"><span class="nav-number">16.4.</span> <span class="nav-text">QBC查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查询所有-1"><span class="nav-number">16.4.1.</span> <span class="nav-text">查询所有</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#条件查询-1"><span class="nav-number">16.4.2.</span> <span class="nav-text">条件查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#排序查询-1"><span class="nav-number">16.4.3.</span> <span class="nav-text">排序查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分页查询-1"><span class="nav-number">16.4.4.</span> <span class="nav-text">分页查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#统计查询"><span class="nav-number">16.4.5.</span> <span class="nav-text">统计查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#离线查询"><span class="nav-number">16.4.6.</span> <span class="nav-text">离线查询</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地sql查询"><span class="nav-number">16.5.</span> <span class="nav-text">本地sql查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HQL多表查询"><span class="nav-number">17.</span> <span class="nav-text">HQL多表查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-内连接"><span class="nav-number">17.1.</span> <span class="nav-text">(1) 内连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-左外连接"><span class="nav-number">17.2.</span> <span class="nav-text">(2) 左外连接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hibernate检索策略"><span class="nav-number">18.</span> <span class="nav-text">Hibernate检索策略</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关联级别策略操作"><span class="nav-number">18.0.1.</span> <span class="nav-text">关联级别策略操作</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#批量抓取"><span class="nav-number">19.</span> <span class="nav-text">批量抓取</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -807,6 +864,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
