@@ -1,104 +1,105 @@
-define(function (){
+/* global KEEP */
+function initTOC() {
+  KEEP.utils.navItems = document.querySelectorAll('.post-toc-wrap .post-toc li');
 
-    var toggleTocArea = function(){
-        var valueHide = yiliaConfig.toc[0];
-        var valueShow = yiliaConfig.toc[1];
-        if ($(".left-col").is(":hidden")) {
-            $("#tocButton").attr("value", valueShow);
+  if (KEEP.utils.navItems.length > 0) {
+
+    KEEP.utils = {
+
+      ...KEEP.utils,
+
+      findActiveIndexByTOC() {
+        if (!Array.isArray(KEEP.utils.sections)) return;
+        let index = KEEP.utils.sections.findIndex(element => {
+          return element && element.getBoundingClientRect().top - 20 > 0;
+        });
+        if (index === -1) {
+          index = KEEP.utils.sections.length - 1;
+        } else if (index > 0) {
+          index--;
         }
-        $("#tocButton").click(function() {
-            if ($("#toc").is(":hidden")) {
-                $("#tocButton").attr("value", valueHide);
-                $("#toc").slideDown(320);
-                $(".switch-btn, .switch-area").fadeOut(300);
-            }
-            else {
-                $("#tocButton").attr("value", valueShow);
-                $("#toc").slideUp(350);
-                $(".switch-btn, .switch-area").fadeIn(500);
-            }
-        })
-    }()
+        this.activateNavByIndex(index);
+      },
 
-    var HideTOCifNoHeader = function(){
-        if (!$(".toc").length) {
-            $("#toc, #tocButton").hide();
-            $(".switch-btn, .switch-area").show();
+      registerSidebarTOC() {
+        KEEP.utils.sections = [...document.querySelectorAll('.post-toc li a.nav-link')].map(element => {
+          const target = document.getElementById(decodeURI(element.getAttribute('href')).replace('#', ''));
+          element.addEventListener('click', event => {
+            event.preventDefault();
+            const offset = target.getBoundingClientRect().top + window.scrollY;
+            window.anime({
+              targets: document.scrollingElement,
+              duration: 500,
+              easing: 'linear',
+              scrollTop: offset - 10,
+              complete: function () {
+                setTimeout(() => {
+                  KEEP.utils.pageTop_dom.classList.add('hide');
+                }, 100)
+              }
+            });
+          });
+          return target;
+        });
+      },
+
+      activateNavByIndex(index) {
+        const target = document.querySelectorAll('.post-toc li a.nav-link')[index];
+        if (!target || target.classList.contains('active-current')) return;
+
+        document.querySelectorAll('.post-toc .active').forEach(element => {
+          element.classList.remove('active', 'active-current');
+        });
+        target.classList.add('active', 'active-current');
+        let parent = target.parentNode;
+        while (!parent.matches('.post-toc')) {
+          if (parent.matches('li')) parent.classList.add('active');
+          parent = parent.parentNode;
         }
-    }()
+        // Scrolling to center active TOC element if TOC content is taller then viewport.
+        const tocElement = document.querySelector('.post-toc-wrap');
+        window.anime({
+          targets: tocElement,
+          duration: 200,
+          easing: 'linear',
+          scrollTop: tocElement.scrollTop - (tocElement.offsetHeight / 2) + target.getBoundingClientRect().top - tocElement.getBoundingClientRect().top
+        });
+      },
 
-    var $itemHasChild = $("#toc .toc-item:has(> .toc-child)");
-    var $titleHasChild = $itemHasChild.children(".toc-link");
-    $itemHasChild.prepend("<i class='fa fa-caret-down'></i><i class='fa fa-caret-right'></i>");
+      showPageAsideWhenHasTOC() {
 
-    var clickIcon = function(){
-        $("#toc .toc-item > i").click(function(){
-            $(this).siblings(".toc-child").slideToggle(100);
-            $(this).toggleClass("hide");
-            $(this).siblings("i").toggleClass("hide");
-        })
-    }()
-
-    var clickTitle = function(){
-        $titleHasChild.dblclick(function(){
-            $(this).siblings(".toc-child").hide(100);
-            $(this).siblings("i").toggleClass("hide");
-        })
-        // After dblclick enent
-        $titleHasChild.click(function(){
-            var $curentTocChild = $(this).siblings(".toc-child");
-            if ($curentTocChild.is(":hidden")) {
-                $curentTocChild.show(100);
-                $(this).siblings("i").toggleClass("hide");
-            }
-        })
-    }()
-
-    var clickTocTitle = function(){
-        var $iconToExpand = $(".toc-item > .fa-caret-right");
-        var $iconToFold = $(".toc-item > .fa-caret-down");
-        var $subToc = $titleHasChild.next(".toc-child");
-        $iconToExpand.addClass("hide");
-
-        var $tocTitle = $("#toc .toc-title");
-        if ($titleHasChild.length) {
-            $tocTitle.addClass("clickable");
-            $tocTitle.click(function(){
-                if ($subToc.is(":hidden")) {
-                    $subToc.show(150);
-                    $iconToExpand.removeClass("hide");
-                    $iconToFold.addClass("hide");
-                } else {
-                    $subToc.hide(100);
-                    $iconToExpand.addClass("hide");
-                    $iconToFold.removeClass("hide");
-                }
-            })
-            // TOC on mobile
-            if ($(".left-col").is(":hidden")) {
-                $("#container .toc-article .toc").css("padding-left", "1.4em");
-                $("#container .toc-article .toc-title").css("display", "initial");
-            }
+        const openHandle = () => {
+          const styleStatus = KEEP.getStyleStatus();
+          const key = 'isOpenPageAside';
+          if (styleStatus && styleStatus.hasOwnProperty(key)) {
+            KEEP.utils.leftSideToggle.pageAsideHandleOfTOC(styleStatus[key]);
+          } else {
+            KEEP.utils.leftSideToggle.pageAsideHandleOfTOC(true);
+          }
         }
-    }()
 
-    var TocNoWarp = function(cond){
-        if (cond) {
-            var $tocLink = $(".toc li a");
-            $tocLink.each(function(){
-                var title = $(this).find('.toc-text').text();
-                // Find elements with ellipsis
-                if (this.offsetWidth < this.scrollWidth) {
-                    $(this).attr("title", title);
-                    if (!!$().tooltip) { $(this).tooltip() }
-                }
-            })
-            var isSafari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
-            if (isSafari) {
-                $("#toc .toc-item i").css("bottom", ".1em");
-            }
+        const initOpenKey = 'init_open';
+
+        if (KEEP.theme_config.toc.hasOwnProperty(initOpenKey)) {
+          KEEP.theme_config.toc[initOpenKey] ? openHandle() : KEEP.utils.leftSideToggle.pageAsideHandleOfTOC(false);
+
+        } else {
+          openHandle();
         }
+
+      }
     }
-    TocNoWarp(yiliaConfig.toc[2]);
 
-})
+    KEEP.utils.showPageAsideWhenHasTOC();
+    KEEP.utils.registerSidebarTOC();
+
+  } else {
+    KEEP.utils.pageContainer_dom.removeChild(document.querySelector('.page-aside'));
+  }
+}
+
+if (KEEP.theme_config.pjax.enable === true && KEEP.utils) {
+  initTOC();
+} else {
+  window.addEventListener('DOMContentLoaded', initTOC);
+}
