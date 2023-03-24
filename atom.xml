@@ -3,11 +3,11 @@
   <title>闲淤</title>
   
   <subtitle>你一定会成为你想要成为的人</subtitle>
-  <link href="https://center-sept.github.io/atom.xml" rel="self"/>
+  <link href="https://blogs.center-sept.top/atom.xml" rel="self"/>
   
-  <link href="https://center-sept.github.io/"/>
+  <link href="https://blogs.center-sept.top/"/>
   <updated>2022-09-05T09:54:14.102Z</updated>
-  <id>https://center-sept.github.io/</id>
+  <id>https://blogs.center-sept.top/</id>
   
   <author>
     <name>center-sept</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="https://center-sept.github.io/2022/09/05/hello-world/"/>
-    <id>https://center-sept.github.io/2022/09/05/hello-world/</id>
+    <link href="https://blogs.center-sept.top/2022/09/05/hello-world/"/>
+    <id>https://blogs.center-sept.top/2022/09/05/hello-world/</id>
     <published>2022-09-05T09:54:14.102Z</published>
     <updated>2022-09-05T09:54:14.102Z</updated>
     
