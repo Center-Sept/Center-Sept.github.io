@@ -9,7 +9,7 @@
     
     <title>
         
-            Git提交规范 |
+            X99双路主板构建服务器工作站主机 |
         
         闲淤唠话
     </title>
@@ -143,7 +143,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">Git提交规范</span>
+            <span class="title-hover-animation">X99双路主板构建服务器工作站主机</span>
         </div>
 
         
@@ -162,8 +162,8 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2020-06-24 00:00:00</span>
-        <span class="mobile">2020-06-24 00:00</span>
+        <span class="pc">2023-03-25 14:21:43</span>
+        <span class="mobile">2023-03-25 14:21</span>
     </span>
     
     
@@ -172,7 +172,7 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/git/">git</a>&nbsp;
+                        <a href="/tags/DIV%E4%B8%BB%E6%9C%BA-X99-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%B7%A5%E4%BD%9C%E7%AB%99/">DIV主机|X99|服务器工作站</a>&nbsp;
                     </li>
                 
             </ul>
@@ -182,12 +182,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>536 字</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>683 字</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i>&nbsp;<span>1 分钟</span>
+            <i class="fas fa-clock"></i>&nbsp;<span>2 分钟</span>
         </span>
     
     
@@ -203,83 +203,73 @@
         
 
         <div class="article-content markdown-body">
-            <p><strong>一、背景</strong></p>
-<p>​	Git每次提交代码都需要写commit message，否则就不允许提交。一般来说，commit message应该清晰明了，说明本次提交的目的，具体做了什么操作……但是在日常开发中，大家的commit message千奇百怪，中英文混合使用、fix bug等各种笼统的message司空见怪，这就导致后续代码维护成本特别大，有时自己都不知道自己的fix bug修改的是什么问题。基于以上这些问题，我们希望通过某种方式来监控用户的git commit message，让规范更好的服务于质量，提高大家的研发效率。</p>
-<p><strong>二、规范介绍</strong></p>
-<p><strong>▐ *<em>规范目标*</em></strong></p>
-<p>- 允许通过脚本生成 README.md</p>
-<p>- 可以通过范围的关键词，快速的搜索到指定版本</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log HEAD --grep feat(package.json) # 在package.json文件里新增的特性。</span><br></pre></td></tr></table></figure>
-
-<p><strong>▐</strong> <em>*<em>*</em>*格式要求****</em>*</p>
-<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;</span><br></pre></td></tr></table></figure>
-
-<p>- 消息只占用一行，任何行都不能超过 100 个字符</p>
-<p>- 允许使用 GitHub 以及各种 Git 工具阅读消息</p>
-<p>- 提交消息由页眉、正文和页脚组成，由空行分隔</p>
-<type>
-
-<p>代表某次提交的类型，比如是修复一个 bug 或是增加一个 feature，类型如下：</p>
-<table>
+            <h2 id="引语"><a href="#引语" class="headerlink" title="引语"></a>引语</h2><p>​		“在如今快节奏的时代，对于服务器和工作站的需求越来越高。作为一款双路主板，X99主板为服务器和工作站的构建提供了更强大的性能和更可靠的稳定性。这款主板支持多核心处理器、高速DDR4内存以及多通道存储，可以满足用户对于高速计算、数据处理和虚拟化的需求。无论是企业还是个人，X99主板都是构建高效、稳定、可靠的服务器和工作站的最佳选择。”</p>
+<h2 id="理由"><a href="#理由" class="headerlink" title="理由"></a>理由</h2><p>​		搭建自己的工作站主机有许多理由。首先，自己搭建工作站主机可以根据个人的需求和预算来定制配置，从而获得更高效的性能。其次，自己搭建工作站主机可以保证硬件的可靠性和稳定性，避免出现因为不兼容或者配置不当而引起的软硬件问题。此外，自己搭建工作站主机也可以更好地保护个人信息和隐私，避免因为不必要的软件安装或者网络攻击而导致信息泄露或系统崩溃。最后，搭建自己的工作站主机可以提高自己的技术水平，让自己更好地理解计算机系统和硬件，从而更好地进行调试和维护。总之，自己搭建工作站主机是一项有挑战性和有意义的任务，可以帮助我更好地理解计算机硬件和软件，从而获得更高效的计算和工作体验。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><table>
 <thead>
 <tr>
-<th>类型</th>
-<th>描述</th>
+<th>组件</th>
+<th>产品</th>
+<th>单位</th>
+<th>价钱</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>feat</td>
-<td>新增feature</td>
+<td>Cpu</td>
+<td>英特尔CPU至强Inte Xeon E5-2680V3 14核28线程</td>
+<td>两颗</td>
+<td>¥428.00</td>
 </tr>
 <tr>
-<td>fix</td>
-<td>修复bug</td>
+<td>主板</td>
+<td>X99-8D4&#x2F;2.5G双路大板 （精粤 X99双路主板 2011-3针 ）</td>
+<td>一个</td>
+<td>¥692.98</td>
 </tr>
 <tr>
-<td>docs</td>
-<td>仅仅修改了文档，比如README等等</td>
+<td>内存条</td>
+<td>酷兽（CUSO）32GB DDR4 2666 台式机内存条 夜枭系列-银甲</td>
+<td>两条</td>
+<td>¥698.00</td>
 </tr>
 <tr>
-<td>style</td>
-<td>修改了空格、格式缩进、逗号等，不改变代码逻辑</td>
+<td>存储-SSD</td>
+<td>七彩虹(Colorfire) 1TB SSD固态硬盘 M.2接口(NVMe协议) CF600镭风系列</td>
+<td>一条</td>
+<td>¥299.00</td>
 </tr>
 <tr>
-<td>refactor</td>
-<td>代码重构，没有加入新的功能或者修复bug</td>
+<td>电源</td>
+<td>游戏悍将 熊猫GX750 额定750W 金牌全模组电源 台式机电脑电源（固态电容DC-DC&#x2F;双路CPU供电&#x2F;全电压）</td>
+<td>一个</td>
+<td>¥369.00</td>
 </tr>
 <tr>
-<td>perf</td>
-<td>优化相关，比如提升性能、体验</td>
+<td>机箱</td>
+<td>游戏悍将 麒麟X1中塔EATX大机箱台式机电脑侧透机箱（支持4090显卡&#x2F;竖装&#x2F;顶部360水冷&#x2F;10风扇位）</td>
+<td>一个</td>
+<td>¥309.00</td>
 </tr>
 <tr>
-<td>test</td>
-<td>测试用例，包括单元测试、集成测试</td>
+<td>CPU散热器</td>
+<td>超频三（PCCOOLER）红海MINI CPU散热器</td>
+<td>两个</td>
+<td>¥59.80</td>
 </tr>
 <tr>
-<td>chore</td>
-<td>改变构建流程、或者增加依赖库、工具等，比如修改pom.xml文件</td>
+<td>显卡</td>
+<td>卡诺基GTX1660S 6G</td>
+<td>一个</td>
+<td>¥675.61</td>
 </tr>
 <tr>
-<td>revert</td>
-<td>回滚上一个版本</td>
-</tr>
-<tr>
-<td>merge</td>
-<td>代码合并</td>
-</tr>
-<tr>
-<td>sync</td>
-<td>同步主线活分支的bug</td>
+<td>显示器</td>
+<td>小米Redmi 21.45英寸显示器 75Hz 300nit高亮 8Bit色深 低蓝光 支持VESA壁挂</td>
+<td>一台</td>
+<td>¥399.00</td>
 </tr>
 </tbody></table>
-<scope>
-
-<p>范围可以是指定提交更改位置的任何内容，如：</p>
-<p>- 对 package.json 文件新增依赖库，chore(package.json): 新增依赖库</p>
-<p>- 或对代码进行重构，refacto(weChat.vue): 重构微信进件</p>
-<subject>
-
-<p>如果没有更合适的范围，可以直接写提交内容</p>
+<p>总价格：¥3876.49</p>
 
         </div>
 
@@ -289,7 +279,7 @@
             <ul class="post-tags-box">
                 
                     <li class="tag-item">
-                        <a href="/tags/git/">#git</a>&nbsp;
+                        <a href="/tags/DIV%E4%B8%BB%E6%9C%BA-X99-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%B7%A5%E4%BD%9C%E7%AB%99/">#DIV主机|X99|服务器工作站</a>&nbsp;
                     </li>
                 
             </ul>
@@ -298,21 +288,21 @@
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/2021/01/01/%E5%88%86%E5%B8%83%E5%BC%8F%E7%94%B5%E5%95%86%E9%A1%B9%E7%9B%AE-%E5%9F%BA%E7%A1%80%E7%AF%87/"
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2023/03/24/Java-8-stream/"
                         >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">分布式电商项目-基础篇</span>
-                                <span class="post-nav-item">上一篇</span>
+                                <span class="post-nav-title-item">Java 8 stream</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
                             </span>
                         </a>
                     </div>
-                
                 
             </div>
         
@@ -523,7 +513,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E8%AF%AD"><span class="nav-number">1.</span> <span class="nav-text">引语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%90%86%E7%94%B1"><span class="nav-number">2.</span> <span class="nav-text">理由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">配置</span></a></li></ol>
     </div>
 </div>
         </aside>
