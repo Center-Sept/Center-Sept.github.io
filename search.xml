@@ -11,7 +11,7 @@
 
 ]]></content>
       <tags>
-        <tag>gitlab centos7</tag>
+        <tag>gitlab|centos7</tag>
       </tags>
   </entry>
   <entry>
@@ -47,7 +47,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker ps </span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
-        <tag>docker kafka zookeeper</tag>
+        <tag>docker|kafka|zookeeper</tag>
       </tags>
   </entry>
   <entry>
@@ -201,7 +201,7 @@
 
 ]]></content>
       <tags>
-        <tag>JIRA Centos7</tag>
+        <tag>JIRA|Centos7</tag>
       </tags>
   </entry>
   <entry>
@@ -2474,7 +2474,7 @@ CategoryServiceImpl
 </ol>
 ]]></content>
       <tags>
-        <tag>SpringCloud docker vue</tag>
+        <tag>SpringCloud|docker|vue</tag>
       </tags>
   </entry>
 </search>
