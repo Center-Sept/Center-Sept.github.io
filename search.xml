@@ -2552,4 +2552,18 @@ CategoryServiceImpl
         <tag>SpringCloud|docker|vue</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Docker镜像加速问题</title>
+    <url>/2023/03/27/Docker%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h2 id="出现问题"><a href="#出现问题" class="headerlink" title="出现问题"></a>出现问题</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Error response from daemon: Get &quot;https://registry-1.docker.io/v2/&quot;: net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 编辑 /etc/docker/daemon.json</span></span><br><span class="line">vi /etc/docker/daemon.json</span><br><span class="line"><span class="comment"># 增加如下文本</span></span><br><span class="line">&#123;<span class="string">&quot;registry-mirrors&quot;</span>:[<span class="string">&quot;https://reg-mirror.qiniu.com/&quot;</span>,<span class="string">&quot;https://5wdlar25.mirror.aliyuncs.com&quot;</span>,<span class="string">&quot;https://hub-mirror.c.163.com/&quot;</span>,<span class="string">&quot;https://docker.mirrors.ustc.edu.cn/&quot;</span>]&#125;</span><br><span class="line"><span class="comment"># 重载配置项</span></span><br><span class="line">systemctl daemon-reload</span><br><span class="line"><span class="comment"># 重启docker服务</span></span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
 </search>

@@ -6,7 +6,7 @@
   <link href="https://blogs.center-sept.top/atom.xml" rel="self"/>
   
   <link href="https://blogs.center-sept.top/"/>
-  <updated>2023-03-25T07:18:22.919Z</updated>
+  <updated>2023-03-27T06:48:40.755Z</updated>
   <id>https://blogs.center-sept.top/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Docker镜像加速问题</title>
+    <link href="https://blogs.center-sept.top/2023/03/27/Docker%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F%E9%97%AE%E9%A2%98/"/>
+    <id>https://blogs.center-sept.top/2023/03/27/Docker%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F%E9%97%AE%E9%A2%98/</id>
+    <published>2023-03-27T06:45:01.000Z</published>
+    <updated>2023-03-27T06:48:40.755Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="出现问题"><a href="#出现问题" class="headerlink" title="出现问题"></a>出现问题</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error response from daemon: Get &quot;https://registry-1.docker.io/v2/&quot;: net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)</span><br></pre></td></tr></table></figure><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编辑 /etc/docker/daemon.json</span></span><br><span class="line">vi /etc/docker/daemon.json</span><br><span class="line"><span class="comment"># 增加如下文本</span></span><br><span class="line">&#123;<span class="string">&quot;registry-mirrors&quot;</span>:[<span class="string">&quot;https://reg-mirror.qiniu.com/&quot;</span>,<span class="string">&quot;https://5wdlar25.mirror.aliyuncs.com&quot;</span>,<span class="string">&quot;https://hub-mirror.c.163.com/&quot;</span>,<span class="string">&quot;https://docker.mirrors.ustc.edu.cn/&quot;</span>]&#125;</span><br><span class="line"><span class="comment"># 重载配置项</span></span><br><span class="line">systemctl daemon-reload</span><br><span class="line"><span class="comment"># 重启docker服务</span></span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;出现问题&quot;&gt;&lt;a href=&quot;#出现问题&quot; class=&quot;headerlink&quot; title=&quot;出现问题&quot;&gt;&lt;/a&gt;出现问题&lt;/h2&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pr</summary>
+      
+    
+    
+    
+    
+    <category term="Docker" scheme="https://blogs.center-sept.top/tags/Docker/"/>
+    
+  </entry>
   
   <entry>
     <title>X99双路主板构建服务器工作站主机</title>
