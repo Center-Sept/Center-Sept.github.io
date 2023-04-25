@@ -6,7 +6,7 @@
   <link href="https://blogs.center-sept.top/atom.xml" rel="self"/>
   
   <link href="https://blogs.center-sept.top/"/>
-  <updated>2023-04-25T02:52:54.412Z</updated>
+  <updated>2023-04-25T03:57:50.463Z</updated>
   <id>https://blogs.center-sept.top/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux搭建Java环境</title>
+    <link href="https://blogs.center-sept.top/2023/04/25/Linux%E6%90%AD%E5%BB%BAJava%E7%8E%AF%E5%A2%83/"/>
+    <id>https://blogs.center-sept.top/2023/04/25/Linux%E6%90%AD%E5%BB%BAJava%E7%8E%AF%E5%A2%83/</id>
+    <published>2023-04-25T03:57:16.000Z</published>
+    <updated>2023-04-25T03:57:50.463Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li>查看linux位数</li></ol><p>查看linux是32位还是64位，影响需要下载JDK的版本</p><table><thead><tr><th align="left">系统位数</th><th align="left">jdk位数</th></tr></thead><tbody><tr><td align="left">x86（32位）</td><td align="left">32位</td></tr><tr><td align="left">x86_64（64位）</td><td align="left">32位 64位</td></tr></tbody></table><p>在linux命令输入：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname -a</span><br></pre></td></tr></table></figure><p>如果是64位机器，会输出x86_64</p><ol start="2"><li>下载JDK</li></ol><p>下载地址：<a class="link"   href="https://download.oracle.com/otn/java/jdk/8u371-b11/ce59cff5c23f4e2eaf4e778a117d4c5b/jdk-8u371-linux-x64.tar.gz" >https://download.oracle.com/otn/java/jdk/8u371-b11/ce59cff5c23f4e2eaf4e778a117d4c5b/jdk-8u371-linux-x64.tar.gz<i class="fas fa-external-link-alt"></i></a></p><ol start="3"><li>安装JDK</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将下载的jdk上传到linux，解压压缩包文件</span></span><br><span class="line">tar -xvf jdk-8u371-linux-x64.tar.gz</span><br><span class="line"><span class="comment"># 移动到/usr/local文件夹下</span></span><br><span class="line"><span class="built_in">mkdir</span> /usr/local/java &amp;&amp; <span class="built_in">mv</span> ./jdk1.8.0_371 /usr/local/java/jdk1.8</span><br><span class="line"><span class="comment"># 编辑环境变量文件/etc/profile</span></span><br><span class="line">vi /etc/profile</span><br><span class="line"><span class="comment"># 加入如下配置</span></span><br><span class="line"><span class="comment">#改成jdk的安装路径</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/local/java/jdk-1.8 </span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="comment"># 使配置生效</span></span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line"><span class="comment"># 测试结果</span></span><br><span class="line">java -version</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;ol&gt;
+&lt;li&gt;查看linux位数&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;查看linux是32位还是64位，影响需要下载JDK的版本&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&quot;left&quot;&gt;系统位数&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;jdk位数&lt;/t</summary>
+      
+    
+    
+    
+    
+    <category term="Java|Linux" scheme="https://blogs.center-sept.top/tags/Java-Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>CentOS 7 TAR包安装Mysql</title>
