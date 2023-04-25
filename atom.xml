@@ -6,7 +6,7 @@
   <link href="https://blogs.center-sept.top/atom.xml" rel="self"/>
   
   <link href="https://blogs.center-sept.top/"/>
-  <updated>2023-04-25T03:57:50.463Z</updated>
+  <updated>2023-03-27T06:48:40.755Z</updated>
   <id>https://blogs.center-sept.top/</id>
   
   <author>
@@ -15,56 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>Linux搭建Java环境</title>
-    <link href="https://blogs.center-sept.top/2023/04/25/Linux%E6%90%AD%E5%BB%BAJava%E7%8E%AF%E5%A2%83/"/>
-    <id>https://blogs.center-sept.top/2023/04/25/Linux%E6%90%AD%E5%BB%BAJava%E7%8E%AF%E5%A2%83/</id>
-    <published>2023-04-25T03:57:16.000Z</published>
-    <updated>2023-04-25T03:57:50.463Z</updated>
-    
-    <content type="html"><![CDATA[<ol><li>查看linux位数</li></ol><p>查看linux是32位还是64位，影响需要下载JDK的版本</p><table><thead><tr><th align="left">系统位数</th><th align="left">jdk位数</th></tr></thead><tbody><tr><td align="left">x86（32位）</td><td align="left">32位</td></tr><tr><td align="left">x86_64（64位）</td><td align="left">32位 64位</td></tr></tbody></table><p>在linux命令输入：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname -a</span><br></pre></td></tr></table></figure><p>如果是64位机器，会输出x86_64</p><ol start="2"><li>下载JDK</li></ol><p>下载地址：<a class="link"   href="https://download.oracle.com/otn/java/jdk/8u371-b11/ce59cff5c23f4e2eaf4e778a117d4c5b/jdk-8u371-linux-x64.tar.gz" >https://download.oracle.com/otn/java/jdk/8u371-b11/ce59cff5c23f4e2eaf4e778a117d4c5b/jdk-8u371-linux-x64.tar.gz<i class="fas fa-external-link-alt"></i></a></p><ol start="3"><li>安装JDK</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将下载的jdk上传到linux，解压压缩包文件</span></span><br><span class="line">tar -xvf jdk-8u371-linux-x64.tar.gz</span><br><span class="line"><span class="comment"># 移动到/usr/local文件夹下</span></span><br><span class="line"><span class="built_in">mkdir</span> /usr/local/java &amp;&amp; <span class="built_in">mv</span> ./jdk1.8.0_371 /usr/local/java/jdk1.8</span><br><span class="line"><span class="comment"># 编辑环境变量文件/etc/profile</span></span><br><span class="line">vi /etc/profile</span><br><span class="line"><span class="comment"># 加入如下配置</span></span><br><span class="line"><span class="comment">#改成jdk的安装路径</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/local/java/jdk-1.8 </span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="comment"># 使配置生效</span></span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line"><span class="comment"># 测试结果</span></span><br><span class="line">java -version</span><br></pre></td></tr></table></figure>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;ol&gt;
-&lt;li&gt;查看linux位数&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;查看linux是32位还是64位，影响需要下载JDK的版本&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th align=&quot;left&quot;&gt;系统位数&lt;/th&gt;
-&lt;th align=&quot;left&quot;&gt;jdk位数&lt;/t</summary>
-      
-    
-    
-    
-    
-    <category term="Java|Linux" scheme="https://blogs.center-sept.top/tags/Java-Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CentOS 7 TAR包安装Mysql</title>
-    <link href="https://blogs.center-sept.top/2023/04/25/CentOS-7-TAR%E5%8C%85%E5%AE%89%E8%A3%85Mysql/"/>
-    <id>https://blogs.center-sept.top/2023/04/25/CentOS-7-TAR%E5%8C%85%E5%AE%89%E8%A3%85Mysql/</id>
-    <published>2023-04-25T02:52:19.000Z</published>
-    <updated>2023-04-25T02:52:54.412Z</updated>
-    
-    <content type="html"><![CDATA[<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 去官网下载需要的tar包</span></span><br><span class="line">wget https://downloads.mysql.com/archives/get/p/23/file/mysql-8.7.38-linux-glibc2.12-x86_64.tar.gz</span><br><span class="line">wget https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.33-linux-glibc2.12-x86_64.tar.xz</span><br><span class="line"><span class="comment"># 解压tar包</span></span><br><span class="line">tar -xvf &#123;包名&#125;</span><br><span class="line"><span class="comment"># 移到/usr/local 下</span></span><br><span class="line"><span class="built_in">mv</span> ./mysql-5.7.37-linux-glibc2.12-x86_64 /usr/local/mysql</span><br><span class="line"><span class="comment"># 创建mysql用户组和用户并修改权限</span></span><br><span class="line">groupadd mysql</span><br><span class="line">useradd -r -g mysql mysql</span><br><span class="line"><span class="built_in">mkdir</span> -p  /data/mysql              <span class="comment">#创建目录</span></span><br><span class="line"><span class="built_in">chown</span> mysql:mysql -R /data/mysql   <span class="comment">#赋予权限</span></span><br><span class="line"><span class="comment"># 配置my.cnf</span></span><br><span class="line">[mysqld]</span><br><span class="line">bind-address=0.0.0.0</span><br><span class="line">port=3306</span><br><span class="line">user=mysql</span><br><span class="line">basedir=/usr/local/mysql      --重要</span><br><span class="line">datadir=/data/mysql           --重要</span><br><span class="line">socket=/tmp/mysql.sock</span><br><span class="line">log-error=/data/mysql/mysql.err</span><br><span class="line">pid-file=/data/mysql/mysql.pid</span><br><span class="line"><span class="comment">#character config</span></span><br><span class="line">character_set_server=utf8mb4</span><br><span class="line">symbolic-links=0</span><br><span class="line">explicit_defaults_for_timestamp=<span class="literal">true</span></span><br><span class="line"><span class="comment"># 初始化数据库</span></span><br><span class="line"><span class="built_in">cd</span> /usr/local/mysql/bin/   --进入mysql的bin目录</span><br><span class="line">./mysqld --defaults-file=/etc/my.cnf --basedir=/usr/local/mysql/ --datadir=/data/mysql/ --user=mysql --initialize  --console  </span><br><span class="line"><span class="comment"># 注：初始化后能看到随机密码，如果看不到，可以找到log-error的配置位置，文本查看器查看临时密码，查找A temporary password is这句话可以找到。</span></span><br><span class="line"><span class="comment"># 将mysql.server放置到/etc/init.d/mysql中</span></span><br><span class="line"><span class="built_in">cp</span> /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql</span><br><span class="line"><span class="comment"># 启动</span></span><br><span class="line">service mysql start</span><br><span class="line"><span class="comment"># 建立链接</span></span><br><span class="line"><span class="built_in">ln</span> -s  /usr/local/mysql/bin/mysql    /usr/bin</span><br><span class="line">mysql -u root -p             --然后输入初始密码</span><br><span class="line">use mysql;    --访问mysql库 </span><br><span class="line"></span><br><span class="line"><span class="comment"># 8.0root密码修改</span></span><br><span class="line">update user <span class="built_in">set</span> authentication_string=password(<span class="string">&#x27;root&#x27;</span>) <span class="built_in">where</span> user=<span class="string">&#x27;root&#x27;</span>;                  </span><br><span class="line">update user <span class="built_in">set</span> host = <span class="string">&#x27;%&#x27;</span> <span class="built_in">where</span> user = <span class="string">&#x27;root&#x27;</span>;      --使root能再任何host访问</span><br><span class="line"></span><br><span class="line"><span class="comment"># 8.0之后修改root密码</span></span><br><span class="line">ALTER USER <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span>IDENTIFIED WITH mysql_native_password BY<span class="string">&#x27;Ra11aoPqRmohzSib&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改完成后刷新权限</span></span><br><span class="line">FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=</summary>
-      
-    
-    
-    
-    
-  </entry>
   
   <entry>
     <title>Docker镜像加速问题</title>
@@ -240,6 +190,58 @@
     
     
     <category term="docker|kafka|zookeeper" scheme="https://blogs.center-sept.top/tags/docker-kafka-zookeeper/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux搭建Java环境</title>
+    <link href="https://blogs.center-sept.top/2021/04/25/Linux%E6%90%AD%E5%BB%BAJava%E7%8E%AF%E5%A2%83/"/>
+    <id>https://blogs.center-sept.top/2021/04/25/Linux%E6%90%AD%E5%BB%BAJava%E7%8E%AF%E5%A2%83/</id>
+    <published>2021-04-25T03:57:16.000Z</published>
+    <updated>2023-04-25T03:58:14.447Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li>查看linux位数</li></ol><p>查看linux是32位还是64位，影响需要下载JDK的版本</p><table><thead><tr><th align="left">系统位数</th><th align="left">jdk位数</th></tr></thead><tbody><tr><td align="left">x86（32位）</td><td align="left">32位</td></tr><tr><td align="left">x86_64（64位）</td><td align="left">32位 64位</td></tr></tbody></table><p>在linux命令输入：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname -a</span><br></pre></td></tr></table></figure><p>如果是64位机器，会输出x86_64</p><ol start="2"><li>下载JDK</li></ol><p>下载地址：<a class="link"   href="https://download.oracle.com/otn/java/jdk/8u371-b11/ce59cff5c23f4e2eaf4e778a117d4c5b/jdk-8u371-linux-x64.tar.gz" >https://download.oracle.com/otn/java/jdk/8u371-b11/ce59cff5c23f4e2eaf4e778a117d4c5b/jdk-8u371-linux-x64.tar.gz<i class="fas fa-external-link-alt"></i></a></p><ol start="3"><li>安装JDK</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将下载的jdk上传到linux，解压压缩包文件</span></span><br><span class="line">tar -xvf jdk-8u371-linux-x64.tar.gz</span><br><span class="line"><span class="comment"># 移动到/usr/local文件夹下</span></span><br><span class="line"><span class="built_in">mkdir</span> /usr/local/java &amp;&amp; <span class="built_in">mv</span> ./jdk1.8.0_371 /usr/local/java/jdk1.8</span><br><span class="line"><span class="comment"># 编辑环境变量文件/etc/profile</span></span><br><span class="line">vi /etc/profile</span><br><span class="line"><span class="comment"># 加入如下配置</span></span><br><span class="line"><span class="comment">#改成jdk的安装路径</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/local/java/jdk-1.8 </span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="comment"># 使配置生效</span></span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line"><span class="comment"># 测试结果</span></span><br><span class="line">java -version</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;ol&gt;
+&lt;li&gt;查看linux位数&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;查看linux是32位还是64位，影响需要下载JDK的版本&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&quot;left&quot;&gt;系统位数&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;jdk位数&lt;/t</summary>
+      
+    
+    
+    
+    
+    <category term="Java|Linux" scheme="https://blogs.center-sept.top/tags/Java-Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CentOS 7 TAR包安装Mysql</title>
+    <link href="https://blogs.center-sept.top/2021/04/25/CentOS-7-TAR%E5%8C%85%E5%AE%89%E8%A3%85Mysql/"/>
+    <id>https://blogs.center-sept.top/2021/04/25/CentOS-7-TAR%E5%8C%85%E5%AE%89%E8%A3%85Mysql/</id>
+    <published>2021-04-25T02:52:19.000Z</published>
+    <updated>2023-04-25T03:58:28.781Z</updated>
+    
+    <content type="html"><![CDATA[<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 去官网下载需要的tar包</span></span><br><span class="line">wget https://downloads.mysql.com/archives/get/p/23/file/mysql-8.7.38-linux-glibc2.12-x86_64.tar.gz</span><br><span class="line">wget https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.33-linux-glibc2.12-x86_64.tar.xz</span><br><span class="line"><span class="comment"># 解压tar包</span></span><br><span class="line">tar -xvf &#123;包名&#125;</span><br><span class="line"><span class="comment"># 移到/usr/local 下</span></span><br><span class="line"><span class="built_in">mv</span> ./mysql-5.7.37-linux-glibc2.12-x86_64 /usr/local/mysql</span><br><span class="line"><span class="comment"># 创建mysql用户组和用户并修改权限</span></span><br><span class="line">groupadd mysql</span><br><span class="line">useradd -r -g mysql mysql</span><br><span class="line"><span class="built_in">mkdir</span> -p  /data/mysql              <span class="comment">#创建目录</span></span><br><span class="line"><span class="built_in">chown</span> mysql:mysql -R /data/mysql   <span class="comment">#赋予权限</span></span><br><span class="line"><span class="comment"># 配置my.cnf</span></span><br><span class="line">[mysqld]</span><br><span class="line">bind-address=0.0.0.0</span><br><span class="line">port=3306</span><br><span class="line">user=mysql</span><br><span class="line">basedir=/usr/local/mysql      --重要</span><br><span class="line">datadir=/data/mysql           --重要</span><br><span class="line">socket=/tmp/mysql.sock</span><br><span class="line">log-error=/data/mysql/mysql.err</span><br><span class="line">pid-file=/data/mysql/mysql.pid</span><br><span class="line"><span class="comment">#character config</span></span><br><span class="line">character_set_server=utf8mb4</span><br><span class="line">symbolic-links=0</span><br><span class="line">explicit_defaults_for_timestamp=<span class="literal">true</span></span><br><span class="line"><span class="comment"># 初始化数据库</span></span><br><span class="line"><span class="built_in">cd</span> /usr/local/mysql/bin/   --进入mysql的bin目录</span><br><span class="line">./mysqld --defaults-file=/etc/my.cnf --basedir=/usr/local/mysql/ --datadir=/data/mysql/ --user=mysql --initialize  --console  </span><br><span class="line"><span class="comment"># 注：初始化后能看到随机密码，如果看不到，可以找到log-error的配置位置，文本查看器查看临时密码，查找A temporary password is这句话可以找到。</span></span><br><span class="line"><span class="comment"># 将mysql.server放置到/etc/init.d/mysql中</span></span><br><span class="line"><span class="built_in">cp</span> /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql</span><br><span class="line"><span class="comment"># 启动</span></span><br><span class="line">service mysql start</span><br><span class="line"><span class="comment"># 建立链接</span></span><br><span class="line"><span class="built_in">ln</span> -s  /usr/local/mysql/bin/mysql    /usr/bin</span><br><span class="line">mysql -u root -p             --然后输入初始密码</span><br><span class="line">use mysql;    --访问mysql库 </span><br><span class="line"></span><br><span class="line"><span class="comment"># 8.0root密码修改</span></span><br><span class="line">update user <span class="built_in">set</span> authentication_string=password(<span class="string">&#x27;root&#x27;</span>) <span class="built_in">where</span> user=<span class="string">&#x27;root&#x27;</span>;                  </span><br><span class="line">update user <span class="built_in">set</span> host = <span class="string">&#x27;%&#x27;</span> <span class="built_in">where</span> user = <span class="string">&#x27;root&#x27;</span>;      --使root能再任何host访问</span><br><span class="line"></span><br><span class="line"><span class="comment"># 8.0之后修改root密码</span></span><br><span class="line">ALTER USER <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span>IDENTIFIED WITH mysql_native_password BY<span class="string">&#x27;Ra11aoPqRmohzSib&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改完成后刷新权限</span></span><br><span class="line">FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=</summary>
+      
+    
+    
+    
+    
+    <category term="Mysql|centos" scheme="https://blogs.center-sept.top/tags/Mysql-centos/"/>
     
   </entry>
   
