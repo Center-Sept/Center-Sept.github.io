@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="这是一个有成分的博客">
+    <meta name="author" content="center-sept">
+    
+    <title>
+        
+            MongoDB_7 Centos7部署 |
+        
+        闲淤唠话
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/favicon.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"blogs.center-sept.top","root":"/","language":"zh-CN","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.svg","favicon":"/images/favicon.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":false,"background_img":"/images/bg.svg","description":"","header_transparent":true,"hitokoto":true},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 6.2.0"><link rel="alternate" href="/atom.xml" title="闲淤" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                闲淤唠话
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">MongoDB_7 Centos7部署</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">center-sept</span>
+                        
+                            <span class="author-label">Lv2</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2023-09-11 17:04:36</span>
+        <span class="mobile">2023-09-11 17:04</span>
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/MongoDB-%E5%AE%89%E8%A3%85-%E9%83%A8%E7%BD%B2/">MongoDB | 安装&amp;部署</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>1.3k 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>5 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="MongoDB-7-Centos7部署"><a href="#MongoDB-7-Centos7部署" class="headerlink" title="MongoDB_7 Centos7部署"></a>MongoDB_7 Centos7部署</h1><h2 id="1-环境准备"><a href="#1-环境准备" class="headerlink" title="1.环境准备"></a>1.环境准备</h2><ul>
+<li>操作系统：Linux CentOS 7</li>
+<li>安装包：mongodb-linux-x86_64-rhel70-7.0.2-rc1.tgz</li>
+</ul>
+<h2 id="2-软件启动安装"><a href="#2-软件启动安装" class="headerlink" title="2.软件启动安装"></a>2.软件启动安装</h2><p>1.将下载好的安装包上传到 Linux 服务器某个目录下，并使用以下命令解压压缩包。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf mongodb-linux-x86_64-rhel70-7.0.2-rc1.tgz</span><br></pre></td></tr></table></figure>
+
+<p>2.将解压后的目录移动到 <code>/usr/local</code> 目录下，并改名为 <code>mongodb</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv mongodb-linux-x86_64-rhel70-7.0.2-rc1 /usr/local/mongodb</span><br></pre></td></tr></table></figure>
+
+<p>3.进入 mongodb 目录，并创建文件夹 data，在 data 文件夹下再创建 db 文件夹（用于存放数据库数据）和 log文件夹（存放 mongo 日志）。然后为其设置可读写权限。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">进入目录</span></span><br><span class="line">cd /usr/local/mongodb/</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建三个文件夹</span></span><br><span class="line">mkdir data data/db data/log</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置可读写权限</span></span><br><span class="line">sudo chmod 777 data/db data/log/</span><br></pre></td></tr></table></figure>
+
+<p>4.在 mongodb 目录下新建配置文件 <code>mongodb.conf</code>（可选，但建议配置），打开文件输入以下内容。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 数据库数据存放目录</span><br><span class="line">dbpath=/usr/local/mongodb/data/db</span><br><span class="line"># 日志文件存放目录</span><br><span class="line">logpath=/usr/local/mongodb/data/log/mongodb.log</span><br><span class="line"># 日志追加方式</span><br><span class="line">logappend=true</span><br><span class="line"># 端口</span><br><span class="line">port=27017</span><br><span class="line"># 是否认证</span><br><span class="line">auth=true</span><br><span class="line"># 以守护进程方式在后台运行</span><br><span class="line">fork=true</span><br><span class="line"># 远程连接要指定ip，否则无法连接；0.0.0.0代表不限制ip访问</span><br><span class="line">bind_ip=0.0.0.0</span><br></pre></td></tr></table></figure>
+
+<p>5.配置环境变量，使用 <code>sudo vi /etc/profile</code> 命令打开系统文件，并在末尾加入以下内容后保存，最后使用 <code>source /etc/profile</code> 命令重启系统配置。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export MONGODB_HOME=/usr/local/mongodb</span><br><span class="line">export PATH=$PATH:$MONGODB_HOME/bin</span><br></pre></td></tr></table></figure>
+
+<p>6.完成以上步骤即可启动 Mongo 服务。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># -f 等同于--config</span><br><span class="line">mongod -f /usr/local/mongodb/mongodb.conf </span><br><span class="line">about to fork child process, waiting until server is ready for connections.</span><br><span class="line">forked process: 1566</span><br><span class="line">child process started successfully, parent exiting</span><br></pre></td></tr></table></figure>
+
+<p>7.安装客户端，安装mongdb shell工具。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">下载安装包</span></span><br><span class="line">wget https://fastdl.mongodb.org/linux/mongodb-shell-linux-x86_64-rhel70-3.6.23.tgz</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">解压</span></span><br><span class="line">tar -zxvf mongodb-shell-linux-x86_64-rhel70-3.6.23.tgz</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">移动到统一文件夹下</span></span><br><span class="line">mv mongodb-linux-x86_64-rhel70-3.6.23 /usr/local/mongodb-shell</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置环境变量</span></span><br><span class="line">vi /etc/profile</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如下：</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">MongoDB-shell环境变量</span></span><br><span class="line">export MONGODB_SHELL_HOME=/usr/local/mongodb-shell</span><br><span class="line">export PATH=$PATH:$MONGODB_SHELL_HOME/bin</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置生效</span></span><br><span class="line">source /etc/profile</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">测试连接</span></span><br><span class="line">mongo</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">进入session说明成功</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-其他配置"><a href="#3-其他配置" class="headerlink" title="3.其他配置"></a>3.其他配置</h2><h3 id="1-开放端口"><a href="#1-开放端口" class="headerlink" title="1.开放端口"></a>1.开放端口</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开放27017端口</span></span><br><span class="line">firewall-cmd --zone=public --add-port=27017/tcp --permanent</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">让配置生效</span></span><br><span class="line">firewall-cmd --reload</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看开放的端口，验证是否成功</span></span><br><span class="line">firewall-cmd --zone=public --list-ports</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">或者直接关闭防火墙</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-检查服务状态"><a href="#2-检查服务状态" class="headerlink" title="2.检查服务状态"></a>2.检查服务状态</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看 mongodb 进程状态</span></span><br><span class="line">ps aux | grep mongo</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查端口是否启动</span></span><br><span class="line">netstat -lanp | grep 27017</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如果 netstat 命令没有找到，先进行安装</span></span><br><span class="line">yum install -y net-tools</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-停止服务"><a href="#3-停止服务" class="headerlink" title="3.停止服务"></a>3.停止服务</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过进程ID杀死</span></span><br><span class="line">kill -9 PID</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过mongod命令关闭mongodb服务</span></span><br><span class="line">mongod -f /usr/local/mongodb/mongodb.conf  --shutdown</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-开机启动"><a href="#4-开机启动" class="headerlink" title="4.开机启动"></a>4.开机启动</h3><p>使用 <code>vi /lib/systemd/system/mongodb.service</code> 命令新建开机启动配置文件，输入以下内容保存。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">    Description=mongodb</span><br><span class="line">    After=network.target remote-fs.target nss-lookup.target</span><br><span class="line">[Service]</span><br><span class="line">    Type=forking</span><br><span class="line">    ExecStart=/usr/local/mongodb/bin/mongod -f /usr/local/mongodb/mongodb.conf</span><br><span class="line">    ExecReload=/bin/kill -s HUP $MAINPID</span><br><span class="line">    ExecStop=/usr/local/mongodb/bin/mongod -f /usr/local/mongodb/mongodb.conf --shutdown</span><br><span class="line">    PrivateTmp=true</span><br><span class="line">[Install]</span><br><span class="line">    WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<p>然后依次执行以下4个命令，使之生效。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动 mongodb</span></span><br><span class="line">systemctl start mongodb.service</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看服务状态</span></span><br><span class="line">systemctl status mongodb.service</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开机自启动</span></span><br><span class="line">systemctl enable mongodb.service</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改 mongodb.service文件时，重新加载文件</span></span><br><span class="line">systemctl daemon-reload</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-用户角色和密码"><a href="#4-用户角色和密码" class="headerlink" title="4.用户角色和密码"></a>4.用户角色和密码</h2><p>启动 MongoDB 服务默认是没有账号密码的，即连接上即可进行各种操作。</p>
+<p>但是我们在启动配置文件中，指定了 auth&#x3D;true，即开启了认证，所以链接后需要认证才能执行操作。默认情况下，MongoDB 是没有管理员账户的，所以我们需要在 admin 数据库中使用 db.createUser() 命令添加管理员帐号或其他角色。</p>
+<h3 id="1-内置角色"><a href="#1-内置角色" class="headerlink" title="1.内置角色"></a>1.内置角色</h3><p>数据库用户角色：read、readWrite<br>数据库管理角色：dbAdmin、dbOwner、userAdmin<br>集群管理角色：clusterAdmin、clusterManager、clusterMonitor、hostManager<br>备份恢复角色：backup、restore<br>所有数据库角色：readAnyDatabase、readWriteAnyDatabase、userAdminAnyDatabase、dbAdminAnyDatabase<br>超级用户角色：root<br>内部角色：__system</p>
+<h3 id="2-创建管理员账号"><a href="#2-创建管理员账号" class="headerlink" title="2.创建管理员账号"></a>2.创建管理员账号</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; use admin</span><br><span class="line">&gt; db.createUser(&#123; </span><br><span class="line">    user: &quot;admin&quot;, </span><br><span class="line">    pwd: &quot;admin&quot;, </span><br><span class="line">    roles: [ &#123; role: &quot;userAdminAnyDatabase&quot;, db: &quot;admin&quot; &#125; ], </span><br><span class="line">    mechanisms : [&quot;SCRAM-SHA-1&quot;] </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-验证"><a href="#3-验证" class="headerlink" title="3. 验证"></a>3. 验证</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; use admin</span><br><span class="line">&gt; db.auth(&quot;admin&quot;,&quot;admin&quot;)</span><br><span class="line">&gt; show tables</span><br><span class="line">system.users</span><br><span class="line">system.version</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-演示对单个数据库创建用户和密码"><a href="#4-演示对单个数据库创建用户和密码" class="headerlink" title="4.演示对单个数据库创建用户和密码"></a>4.演示对单个数据库创建用户和密码</h3><p>平常开发中，一般新项目会创建新的数据库，而且创建一个新的数据库用户仅对此数据库进行读写。</p>
+<p>以下演示创建 chenpi 用户，密码为123456，并设置对 nobody 数据库读写的权限。注意，创建新用户前，先使用 admin 用户登录，因为我们刚才为 admin 用户设置了 userAdminAnyDatabase 权限。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 先使用有创建用户权限的用户登录</span><br><span class="line">&gt; use admin</span><br><span class="line">&gt; db.auth(&quot;admin&quot;,&quot;123456&quot;)</span><br><span class="line"># 新用户的认证库</span><br><span class="line">&gt; use test</span><br><span class="line"># 创建chenpi用户，密码123465，对nobody数据库有读写权限</span><br><span class="line">&gt; db.createUser(&#123;user:&#x27;test&#x27;,pwd:&#x27;test&#x27;,roles:[&#123;role:&#x27;readWrite&#x27;,db:&#x27;nobody&#x27;&#125;],mechanisms : [&quot;SCRAM-SHA-1&quot;]&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-MongoDB可视化工具-Studio-3T-For-MongoDB"><a href="#5-MongoDB可视化工具-Studio-3T-For-MongoDB" class="headerlink" title="5.MongoDB可视化工具(Studio 3T For MongoDB)"></a>5.MongoDB可视化工具(Studio 3T For MongoDB)</h2><p>[Download Studio 3T for MongoDB | Windows, macOS &amp; Linux](</p>
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/MongoDB-%E5%AE%89%E8%A3%85-%E9%83%A8%E7%BD%B2/">#MongoDB | 安装&amp;部署</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2023/09/07/ChatGPT%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">ChatGPT使用指南</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: 'NPvlU9qYYDAjLzhWKAVpcDt9-gzGzoHsz',
+                    appKey: '9xsXsbHshMIXzFNYU9E9ANJB',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = 'center-sept';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2018</span>
+              -
+            
+            2023&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">center-sept</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+            <li class="tools-item rss flex-center">
+                <a class="flex-center"
+                   href="/atom.xml"
+                   target="_blank"
+                >
+                    <i class="fas fa-rss"></i>
+                </a>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MongoDB-7-Centos7%E9%83%A8%E7%BD%B2"><span class="nav-number">1.</span> <span class="nav-text">MongoDB_7 Centos7部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-number">1.1.</span> <span class="nav-text">1.环境准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%BD%AF%E4%BB%B6%E5%90%AF%E5%8A%A8%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.</span> <span class="nav-text">2.软件启动安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%85%B6%E4%BB%96%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.</span> <span class="nav-text">3.其他配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.开放端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%A3%80%E6%9F%A5%E6%9C%8D%E5%8A%A1%E7%8A%B6%E6%80%81"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.检查服务状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%81%9C%E6%AD%A2%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.停止服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8"><span class="nav-number">1.3.4.</span> <span class="nav-text">4.开机启动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E7%94%A8%E6%88%B7%E8%A7%92%E8%89%B2%E5%92%8C%E5%AF%86%E7%A0%81"><span class="nav-number">1.4.</span> <span class="nav-text">4.用户角色和密码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%86%85%E7%BD%AE%E8%A7%92%E8%89%B2"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.内置角色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%88%9B%E5%BB%BA%E7%AE%A1%E7%90%86%E5%91%98%E8%B4%A6%E5%8F%B7"><span class="nav-number">1.4.2.</span> <span class="nav-text">2.创建管理员账号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%AA%8C%E8%AF%81"><span class="nav-number">1.4.3.</span> <span class="nav-text">3. 验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%BC%94%E7%A4%BA%E5%AF%B9%E5%8D%95%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E5%92%8C%E5%AF%86%E7%A0%81"><span class="nav-number">1.4.4.</span> <span class="nav-text">4.演示对单个数据库创建用户和密码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-MongoDB%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B7%A5%E5%85%B7-Studio-3T-For-MongoDB"><span class="nav-number">1.5.</span> <span class="nav-text">5.MongoDB可视化工具(Studio 3T For MongoDB)</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

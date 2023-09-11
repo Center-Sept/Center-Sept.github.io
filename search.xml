@@ -2835,4 +2835,71 @@ CategoryServiceImpl
         <tag>ChatGPT</tag>
       </tags>
   </entry>
+  <entry>
+    <title>MongoDB_7 Centos7部署</title>
+    <url>/2023/09/11/MongoDB-7-Centos7%E9%83%A8%E7%BD%B2/</url>
+    <content><![CDATA[<h1 id="MongoDB-7-Centos7部署"><a href="#MongoDB-7-Centos7部署" class="headerlink" title="MongoDB_7 Centos7部署"></a>MongoDB_7 Centos7部署</h1><h2 id="1-环境准备"><a href="#1-环境准备" class="headerlink" title="1.环境准备"></a>1.环境准备</h2><ul>
+<li>操作系统：Linux CentOS 7</li>
+<li>安装包：mongodb-linux-x86_64-rhel70-7.0.2-rc1.tgz</li>
+</ul>
+<h2 id="2-软件启动安装"><a href="#2-软件启动安装" class="headerlink" title="2.软件启动安装"></a>2.软件启动安装</h2><p>1.将下载好的安装包上传到 Linux 服务器某个目录下，并使用以下命令解压压缩包。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar -zxvf mongodb-linux-x86_64-rhel70-7.0.2-rc1.tgz</span><br></pre></td></tr></table></figure>
+
+<p>2.将解压后的目录移动到 <code>/usr/local</code> 目录下，并改名为 <code>mongodb</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mv mongodb-linux-x86_64-rhel70-7.0.2-rc1 /usr/local/mongodb</span><br></pre></td></tr></table></figure>
+
+<p>3.进入 mongodb 目录，并创建文件夹 data，在 data 文件夹下再创建 db 文件夹（用于存放数据库数据）和 log文件夹（存放 mongo 日志）。然后为其设置可读写权限。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">进入目录</span></span><br><span class="line">cd /usr/local/mongodb/</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建三个文件夹</span></span><br><span class="line">mkdir data data/db data/log</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置可读写权限</span></span><br><span class="line">sudo chmod 777 data/db data/log/</span><br></pre></td></tr></table></figure>
+
+<p>4.在 mongodb 目录下新建配置文件 <code>mongodb.conf</code>（可选，但建议配置），打开文件输入以下内容。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 数据库数据存放目录</span><br><span class="line">dbpath=/usr/local/mongodb/data/db</span><br><span class="line"># 日志文件存放目录</span><br><span class="line">logpath=/usr/local/mongodb/data/log/mongodb.log</span><br><span class="line"># 日志追加方式</span><br><span class="line">logappend=true</span><br><span class="line"># 端口</span><br><span class="line">port=27017</span><br><span class="line"># 是否认证</span><br><span class="line">auth=true</span><br><span class="line"># 以守护进程方式在后台运行</span><br><span class="line">fork=true</span><br><span class="line"># 远程连接要指定ip，否则无法连接；0.0.0.0代表不限制ip访问</span><br><span class="line">bind_ip=0.0.0.0</span><br></pre></td></tr></table></figure>
+
+<p>5.配置环境变量，使用 <code>sudo vi /etc/profile</code> 命令打开系统文件，并在末尾加入以下内容后保存，最后使用 <code>source /etc/profile</code> 命令重启系统配置。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export MONGODB_HOME=/usr/local/mongodb</span><br><span class="line">export PATH=$PATH:$MONGODB_HOME/bin</span><br></pre></td></tr></table></figure>
+
+<p>6.完成以上步骤即可启动 Mongo 服务。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># -f 等同于--config</span><br><span class="line">mongod -f /usr/local/mongodb/mongodb.conf </span><br><span class="line">about to fork child process, waiting until server is ready for connections.</span><br><span class="line">forked process: 1566</span><br><span class="line">child process started successfully, parent exiting</span><br></pre></td></tr></table></figure>
+
+<p>7.安装客户端，安装mongdb shell工具。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">下载安装包</span></span><br><span class="line">wget https://fastdl.mongodb.org/linux/mongodb-shell-linux-x86_64-rhel70-3.6.23.tgz</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">解压</span></span><br><span class="line">tar -zxvf mongodb-shell-linux-x86_64-rhel70-3.6.23.tgz</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">移动到统一文件夹下</span></span><br><span class="line">mv mongodb-linux-x86_64-rhel70-3.6.23 /usr/local/mongodb-shell</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置环境变量</span></span><br><span class="line">vi /etc/profile</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如下：</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">MongoDB-shell环境变量</span></span><br><span class="line">export MONGODB_SHELL_HOME=/usr/local/mongodb-shell</span><br><span class="line">export PATH=$PATH:$MONGODB_SHELL_HOME/bin</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置生效</span></span><br><span class="line">source /etc/profile</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">测试连接</span></span><br><span class="line">mongo</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">进入session说明成功</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-其他配置"><a href="#3-其他配置" class="headerlink" title="3.其他配置"></a>3.其他配置</h2><h3 id="1-开放端口"><a href="#1-开放端口" class="headerlink" title="1.开放端口"></a>1.开放端口</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开放27017端口</span></span><br><span class="line">firewall-cmd --zone=public --add-port=27017/tcp --permanent</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">让配置生效</span></span><br><span class="line">firewall-cmd --reload</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看开放的端口，验证是否成功</span></span><br><span class="line">firewall-cmd --zone=public --list-ports</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">或者直接关闭防火墙</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-检查服务状态"><a href="#2-检查服务状态" class="headerlink" title="2.检查服务状态"></a>2.检查服务状态</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看 mongodb 进程状态</span></span><br><span class="line">ps aux | grep mongo</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查端口是否启动</span></span><br><span class="line">netstat -lanp | grep 27017</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如果 netstat 命令没有找到，先进行安装</span></span><br><span class="line">yum install -y net-tools</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-停止服务"><a href="#3-停止服务" class="headerlink" title="3.停止服务"></a>3.停止服务</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过进程ID杀死</span></span><br><span class="line">kill -9 PID</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过mongod命令关闭mongodb服务</span></span><br><span class="line">mongod -f /usr/local/mongodb/mongodb.conf  --shutdown</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-开机启动"><a href="#4-开机启动" class="headerlink" title="4.开机启动"></a>4.开机启动</h3><p>使用 <code>vi /lib/systemd/system/mongodb.service</code> 命令新建开机启动配置文件，输入以下内容保存。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">    Description=mongodb</span><br><span class="line">    After=network.target remote-fs.target nss-lookup.target</span><br><span class="line">[Service]</span><br><span class="line">    Type=forking</span><br><span class="line">    ExecStart=/usr/local/mongodb/bin/mongod -f /usr/local/mongodb/mongodb.conf</span><br><span class="line">    ExecReload=/bin/kill -s HUP $MAINPID</span><br><span class="line">    ExecStop=/usr/local/mongodb/bin/mongod -f /usr/local/mongodb/mongodb.conf --shutdown</span><br><span class="line">    PrivateTmp=true</span><br><span class="line">[Install]</span><br><span class="line">    WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<p>然后依次执行以下4个命令，使之生效。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动 mongodb</span></span><br><span class="line">systemctl start mongodb.service</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看服务状态</span></span><br><span class="line">systemctl status mongodb.service</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开机自启动</span></span><br><span class="line">systemctl enable mongodb.service</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改 mongodb.service文件时，重新加载文件</span></span><br><span class="line">systemctl daemon-reload</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-用户角色和密码"><a href="#4-用户角色和密码" class="headerlink" title="4.用户角色和密码"></a>4.用户角色和密码</h2><p>启动 MongoDB 服务默认是没有账号密码的，即连接上即可进行各种操作。</p>
+<p>但是我们在启动配置文件中，指定了 auth&#x3D;true，即开启了认证，所以链接后需要认证才能执行操作。默认情况下，MongoDB 是没有管理员账户的，所以我们需要在 admin 数据库中使用 db.createUser() 命令添加管理员帐号或其他角色。</p>
+<h3 id="1-内置角色"><a href="#1-内置角色" class="headerlink" title="1.内置角色"></a>1.内置角色</h3><p>数据库用户角色：read、readWrite<br>数据库管理角色：dbAdmin、dbOwner、userAdmin<br>集群管理角色：clusterAdmin、clusterManager、clusterMonitor、hostManager<br>备份恢复角色：backup、restore<br>所有数据库角色：readAnyDatabase、readWriteAnyDatabase、userAdminAnyDatabase、dbAdminAnyDatabase<br>超级用户角色：root<br>内部角色：__system</p>
+<h3 id="2-创建管理员账号"><a href="#2-创建管理员账号" class="headerlink" title="2.创建管理员账号"></a>2.创建管理员账号</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt; use admin</span><br><span class="line">&gt; db.createUser(&#123; </span><br><span class="line">    user: &quot;admin&quot;, </span><br><span class="line">    pwd: &quot;admin&quot;, </span><br><span class="line">    roles: [ &#123; role: &quot;userAdminAnyDatabase&quot;, db: &quot;admin&quot; &#125; ], </span><br><span class="line">    mechanisms : [&quot;SCRAM-SHA-1&quot;] </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-验证"><a href="#3-验证" class="headerlink" title="3. 验证"></a>3. 验证</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt; use admin</span><br><span class="line">&gt; db.auth(&quot;admin&quot;,&quot;admin&quot;)</span><br><span class="line">&gt; show tables</span><br><span class="line">system.users</span><br><span class="line">system.version</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-演示对单个数据库创建用户和密码"><a href="#4-演示对单个数据库创建用户和密码" class="headerlink" title="4.演示对单个数据库创建用户和密码"></a>4.演示对单个数据库创建用户和密码</h3><p>平常开发中，一般新项目会创建新的数据库，而且创建一个新的数据库用户仅对此数据库进行读写。</p>
+<p>以下演示创建 chenpi 用户，密码为123456，并设置对 nobody 数据库读写的权限。注意，创建新用户前，先使用 admin 用户登录，因为我们刚才为 admin 用户设置了 userAdminAnyDatabase 权限。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 先使用有创建用户权限的用户登录</span><br><span class="line">&gt; use admin</span><br><span class="line">&gt; db.auth(&quot;admin&quot;,&quot;123456&quot;)</span><br><span class="line"># 新用户的认证库</span><br><span class="line">&gt; use test</span><br><span class="line"># 创建chenpi用户，密码123465，对nobody数据库有读写权限</span><br><span class="line">&gt; db.createUser(&#123;user:&#x27;test&#x27;,pwd:&#x27;test&#x27;,roles:[&#123;role:&#x27;readWrite&#x27;,db:&#x27;nobody&#x27;&#125;],mechanisms : [&quot;SCRAM-SHA-1&quot;]&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-MongoDB可视化工具-Studio-3T-For-MongoDB"><a href="#5-MongoDB可视化工具-Studio-3T-For-MongoDB" class="headerlink" title="5.MongoDB可视化工具(Studio 3T For MongoDB)"></a>5.MongoDB可视化工具(Studio 3T For MongoDB)</h2><p>[Download Studio 3T for MongoDB | Windows, macOS &amp; Linux](</p>
+]]></content>
+      <tags>
+        <tag>MongoDB | 安装&amp;部署</tag>
+      </tags>
+  </entry>
 </search>
