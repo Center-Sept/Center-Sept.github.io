@@ -1,0 +1,97 @@
+# Hexo 站点配置 —— 博客 P0 §四（架构决策记录/2026-09-19-内容系统-博客平台P0实施方案-hexo.md，回执 dcb48aa 过审）
+# 站名 / 描述 / 作者取自旧站 HTML <meta>（legacy-site 分支），不是猜的。
+
+# Site
+title: 闲淤唠话
+subtitle: ''
+description: 这是一个有成分的博客
+keywords:
+author: center-sept
+language: zh-CN
+# ★回执 C5：稿件日期按此解析。★但它**不够**：permalink 的 yyyy/mm/dd 按进程本地时区格式化，UTC runner 上
+#   CST 00:30 仍落前一天目录（2026-09-20 N7 实测）⇒ .github/workflows/pages.yml 的 build job 另设 env TZ=Asia/Shanghai，两处都要。
+timezone: Asia/Shanghai
+
+# URL —— 与 CNAME 同；center-sept.github.io 301 到它
+url: https://blogs.center-sept.top
+# ★与旧站相同；hexo 的 :title = 文件名（相对 _posts）。旧文 15 篇中文文件名一字不改 ⇒ 15 个旧 URL 不变；
+#   新文文件名 = 稿件 frontmatter slug（ASCII），由 fuxi publish-kit 07-博客/ 产出。
+permalink: :year/:month/:day/:title/
+permalink_defaults:
+pretty_urls:
+  trailing_index: true
+  trailing_html: true
+
+# Directory
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
+skip_render:
+
+# Writing
+new_post_name: :title.md
+default_layout: post
+titlecase: false
+external_link:
+  enable: true
+  field: site
+  exclude: ''
+filename_case: 0
+render_drafts: false
+# 新文图片进 <slug>/ 目录（publish-kit 把封面拷进去，frontmatter cover: cover.png）
+post_asset_folder: true
+marked:
+  prependRoot: true
+  postAsset: true
+relative_link: false
+future: true
+syntax_highlighter: highlight.js
+highlight:
+  line_number: true
+  auto_detect: false
+  tab_replace: ''
+  wrap: true
+  hljs: false
+prismjs:
+  preprocess: true
+  line_number: true
+  tab_replace: ''
+
+# Home page setting
+index_generator:
+  path: ''
+  per_page: 10
+  order_by: -date
+
+# Category & Tag
+default_category: uncategorized
+category_map:
+tag_map:
+
+# Metadata elements
+meta_generator: true
+
+# Date / Time format
+date_format: YYYY-MM-DD
+time_format: HH:mm:ss
+updated_option: 'date'
+
+# Pagination
+per_page: 10
+pagination_dir: page
+
+# Include / Exclude file(s)
+include:
+exclude:
+ignore:
+
+# Extensions
+# 主题 butterfly（用户 2026-09-19 明批的万星例外，8.4k★ Apache-2.0）；主题配置在 _config.butterfly.yml，不改 node_modules
+theme: butterfly
+
+# Deployment —— ★不用 hexo-deployer-git：发布走 .github/workflows/pages.yml（官方 Actions 做法）
+deploy:

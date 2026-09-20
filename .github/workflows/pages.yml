@@ -1,0 +1,69 @@
+# hexo 官方 GitHub Pages 做法（hexojs/site docs/github-pages.md）原形，只改三处：
+#   ① 分支 source（本仓源在 source，master/legacy-site 是旧产物）
+#   ② Node 24（与本机 v24.18.0 同大版本，官方叮嘱与本地一致）
+#   ③ 加两步产物侧判据：CNAME 在位且相等（负对照 ④）· 15 篇旧 permalink 目录都生成了（派② 验收前置）
+# 不引 hexo-deployer-git。Pages 来源须切到「GitHub Actions」（仓 Settings → Pages，用户按键，博客 P0 §一 第 7 步）。
+name: Pages
+
+on:
+  push:
+    branches:
+      - source
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # ★N7 实测（2026-09-20，本机 TZ=UTC 模拟 runner）：_config.yml 的 timezone 只管解析稿件日期，
+    #   permalink 的 yyyy/mm/dd 按进程本地时区格式化 —— CST 00:30 在 UTC runner 上落到前一天目录。
+    #   进程时区也钉成 Asia/Shanghai，解析与格式化才同一口径（回执 C5 的裁定不足以单独成立，已回报）。
+    env:
+      TZ: Asia/Shanghai
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          submodules: recursive
+      - name: Use Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Cache NPM dependencies
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-npm-cache
+          restore-keys: |
+            ${{ runner.OS }}-npm-cache
+      - name: Install Dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: "★ 负对照 ④：产物根必须有 CNAME 且内容相等，否则这次部署会把自定义域名冲掉"
+        run: test -f public/CNAME && test "$(cat public/CNAME)" = "blogs.center-sept.top"
+      - name: "★ 派②：15 篇旧 permalink 目录都生成了（读 tools/legacy-manifest.tsv）"
+        run: |
+          n=0
+          while IFS=$'\t' read -r p _; do
+            case "$p" in \#*|'') continue;; esac
+            test -f "public/$p/index.html" || { echo "缺 $p"; exit 1; }
+            n=$((n+1))
+          done < tools/legacy-manifest.tsv
+          test "$n" -eq 15 || { echo "清单不是 15 篇：$n"; exit 1; }
+          echo "15 篇旧目录在位"
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+  deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
