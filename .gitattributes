@@ -1,0 +1,6 @@
+# 两侧一律 LF：全局 autocrlf=true 会把 shell/yaml 检出成 CRLF，bash 跑 CRLF 脚本直接 syntax error（法典 §5.73）
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.ico binary
+*.woff2 binary
