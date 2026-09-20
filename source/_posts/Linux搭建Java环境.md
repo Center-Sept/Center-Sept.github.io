@@ -1,8 +1,8 @@
 ---
-title: Linux搭建Java环境
+title: "Linux搭建Java环境"
 date: 2021-04-25 00:00:00
 tags:
-  - Java-Linux
+  - "Java|Linux"
 categories: []
 ---
 1.  查看linux位数
@@ -16,7 +16,7 @@ categories: []
 
 在linux命令输入：
 
-```
+```plaintext
 uname -a
 ```
 
@@ -32,18 +32,16 @@ uname -a
 # 将下载的jdk上传到linux，解压压缩包文件
 tar -xvf jdk-8u371-linux-x64.tar.gz
 # 移动到/usr/local文件夹下
-mkdir
+mkdir /usr/local/java && mv ./jdk1.8.0_371 /usr/local/java/jdk1.8
 # 编辑环境变量文件/etc/profile
 vi /etc/profile
 # 加入如下配置
 #改成jdk的安装路径
-export
-export
-export
+export JAVA_HOME=/usr/local/java/jdk-1.8 
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+export PATH=$JAVA_HOME/bin:$PATH
 # 使配置生效
-source
+source /etc/profile
 # 测试结果
 java -version
 ```
-
-- [\#Java\|Linux](/tags/Java-Linux/)

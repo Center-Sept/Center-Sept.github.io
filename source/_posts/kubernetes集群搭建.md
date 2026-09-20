@@ -1,11 +1,11 @@
 ---
-title: kubernetes集群搭建
+title: "kubernetes集群搭建"
 date: 2022-05-05 00:00:00
 tags:
-  - kubernetes
+  - "kubernetes"
 categories: []
 ---
-## <a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备
+## 环境准备
 
 1.一台16G及以上的电脑
 
@@ -17,21 +17,21 @@ categories: []
 
 5.分别配置好静态ip地址和hostname
 
-## <a href="#Docker容器化安装" class="headerlink" title="Docker容器化安装"></a>Docker容器化安装
+## Docker容器化安装
 
 ```shell
-# 
+# 首先安装工具类
 yum install -y yum-utils
-# 
+# 配置docker的yum源
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-# 
+# 安装docker
 sudo yum install -y docker-ce docker-ce-cli containerd.io
-# 
+# 可以指定版本来安装，这里是安装最新版本，所以要寻找最新版本的k8s来支持
 yum install -y docker-ce-20.10.7 docker-ce-cli-20.10.7 containerd.io-1.4.6
-# 
+# 启动docker
 systemctl enable docker --now
 
-# 
+# 添加了docker的生产环境核心配置cgroup
 sudo mkdir -p /etc/docker 
 sudo tee /etc/docker/daemon.json <<-'EOF'
 {
@@ -44,12 +44,12 @@ sudo tee /etc/docker/daemon.json <<-'EOF'
   "storage-driver": "overlay2"
 }
 EOF
-# 
+# 加载配置 重启docker
 sudo systemctl daemon-reload && sudo systemctl restart docker
 
 ```
 
-## <a href="#预备环境搭建" class="headerlink" title="预备环境搭建"></a>预备环境搭建
+## 预备环境搭建
 
 ```bash
 # 修改hostname，用于主机间的通讯
@@ -60,12 +60,12 @@ hostnamectl set-hostname k8s-node2
 bash
 #将SELinux设置为permissive模式（相当于将其禁用）
 sudo setenforce 0
-sudo sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/'
+sudo sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 # 关闭交换空间
 swapoff -a
-sed -ri 's/.*swap.*/#&/'
+sed -ri 's/.*swap.*/#&/' /etc/fstab
 # 转发 IPv4 并让 iptables 看到桥接流量
-cat
+cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 overlay
 br_netfilter
 EOF
@@ -74,7 +74,7 @@ sudo modprobe overlay
 sudo modprobe br_netfilter
 
 # 设置所需的 sysctl 参数，参数在重新启动后保持不变
-cat
+cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-iptables  = 1
 net.bridge.bridge-nf-call-ip6tables = 1
 net.ipv4.ip_forward                 = 1
@@ -92,10 +92,10 @@ sysctl net.bridge.bridge-nf-call-iptables net.bridge.bridge-nf-call-ip6tables ne
 
 ```
 
-## <a href="#集群三大组件安装（kubeadm、kubectl、kubelet）" class="headerlink" title="集群三大组件安装（kubeadm、kubectl、kubelet）"></a>集群三大组件安装（kubeadm、kubectl、kubelet）
+## 集群三大组件安装（kubeadm、kubectl、kubelet）
 
 ```bash
-cat
+cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
 baseurl=http://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
@@ -107,17 +107,18 @@ gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
 exclude=kubelet kubeadm kubectl
 EOF
 
+
 sudo yum install -y kubelet-1.20.9 kubeadm-1.20.9 kubectl-1.20.9 --disableexcludes=kubernetes
 
-sudo systemctl enable
+sudo systemctl enable --now kubelet
 ```
 
-## <a href="#使用kubeadm引导集群" class="headerlink" title="使用kubeadm引导集群"></a>使用kubeadm引导集群
+## 使用kubeadm引导集群
 
-### <a href="#下载各个机器需要的镜像" class="headerlink" title="下载各个机器需要的镜像"></a>下载各个机器需要的镜像
+### 下载各个机器需要的镜像
 
 ```bash
-sudo tee
+sudo tee ./images.sh <<-'EOF'
 #!/bin/bash
 images=(
 kube-apiserver:v1.20.9
@@ -128,19 +129,19 @@ coredns:1.7.0
 etcd:3.4.13-0
 pause:3.2
 )
-for
+for imageName in ${images[@]} ; do
 docker pull registry.cn-hangzhou.aliyuncs.com/lfy_k8s_images/$imageName
 done
 EOF
    
-chmod
+chmod +x ./images.sh && ./images.sh
 ```
 
-### <a href="#初始化主节点" class="headerlink" title="初始化主节点"></a>初始化主节点
+### 初始化主节点
 
 ```bash
 #所有机器添加master域名映射，以下需要修改为自己的
-echo
+echo "{你的主节点内网主机ip}  cluster-endpoint" >> /etc/hosts
 
 # ping一下是否能通讯
 ping cluster-endpoint
@@ -157,9 +158,9 @@ kubeadm init \
 
 # 执行完成以上命令后，把Your Kubernetes control-plane has initialized successfully!语句之后的文本复制下来，之后会使用到
 # 执行文本中的命令
-mkdir
-sudo cp
-sudo chown
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 # 如果不小心清屏了,用一下命令重置一下 
 kubeadm reset
@@ -175,7 +176,7 @@ curl https://docs.projectcalico.org/v3.20/manifests/calico.yaml -O
 kubectl apply -f calico.yaml
 
 # 使用初始化之后的信息，将工作节点加入到集群中
-kubeadm join
+kubeadm join cluster-endpoint:6443 --token hijbfi.ewcww5noqyztfgsa \
     --discovery-token-ca-cert-hash sha256:2c2b1c21e175f7eaa0692e8fad349af599adbd0f53118d0f48101aacbd3be142
 
 # 如果以上命令的令牌已经过期，可以使用一下命令来生成令牌
@@ -189,7 +190,7 @@ watch -n 1 kubectl get pod -A
 
 最后重启所有节点机器，测试一下集群的修复能力。如果启动失败，看看是不是docker服务是不是没有启动。
 
-### <a href="#部署可视化" class="headerlink" title="部署可视化"></a>部署可视化
+### 部署可视化
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/aio/deploy/recommended.yaml
@@ -199,5 +200,3 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/a
 kubectl apply -f dashboard.yaml
 
 ```
-
-- [\#kubernetes](/tags/kubernetes/)

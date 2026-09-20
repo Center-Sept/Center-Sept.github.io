@@ -9,6 +9,7 @@ on:
   push:
     branches:
       - source
+  workflow_dispatch:   # C10：切源后「步 8 触发部署」= Actions 页一个 Run workflow 按钮，不用空提交
 
 jobs:
   build:

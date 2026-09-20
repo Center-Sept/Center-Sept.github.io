@@ -1,15 +1,15 @@
 ---
-title: ChatGPT使用指南
+title: "ChatGPT使用指南"
 date: 2023-09-07 00:00:00
 tags:
-  - ChatGPT
+  - "ChatGPT"
 categories: []
 ---
-# <a href="#ChatGPT使用指南" class="headerlink" title="ChatGPT使用指南"></a>ChatGPT使用指南
+# ChatGPT使用指南
 
 > 本文借鉴多个创作者案例，如有雷同，请联系我
 
-## <a href="#1、写报告" class="headerlink" title="1、写报告"></a>1、写报告
+## 1、写报告
 
 1、我现在正在\[报告的情境与目的\]。我的简报主题是\[主题\]，请提供\[数字\]种开头方式，要简单到\[目标族群\]能听懂，同时要足够能吸引人，让他们愿意专心听下去
 
@@ -21,7 +21,7 @@ categories: []
 
 4、你是\[某个主题\]的专家，请总结以下内容，并针对以下内容提出未来能进一步研究的方向\[附上内容\]你是金融科技专家，请总结以下内容，并针对以下内容提出未来能进一步研究的方向\[附上内容\]
 
-## <a href="#2、资料整理" class="headerlink" title="2、资料整理"></a>2、资料整理
+## 2、资料整理
 
 1、给我\[数字\]篇，有关\[领域\]的文章。
 
@@ -35,7 +35,7 @@ categories: []
 
 用列点的方式总结出10个量子力学知识重点。
 
-## <a href="#3、简历与自传" class="headerlink" title="3、简历与自传"></a>3、简历与自传
+## 3、简历与自传
 
 1、这份\[职位\]的简历，有哪边可以写更好?请以专业面试官的角度，提出具体改进建议。接着以你提出的建议来改写这段经历，改写时请维持列点的形式。\[附上简历\]  
 这份UIUX设计师的简历，有哪边可以写更好?请以专业面试官的角度，提出具体改进建议。接着以你提出的建议来改写这段经历，改写时请维持列点的形式。
@@ -51,7 +51,7 @@ categories: []
 
 我今天要申请Google的前端工程师，改写以下经历，让我能更符合Google 的企业文化。\[附上经历\]
 
-## <a href="#4、准备面试" class="headerlink" title="4、准备面试"></a>4、准备面试
+## 4、准备面试
 
 1、你现在是\[公司\]的\[职位\]面试官，请分享在\[职位\]面试时最常会问的\[数字\]个问题。
 
@@ -69,7 +69,7 @@ categories: []
 
 我在准备「请分享一个你在急迫的期限中完成专案的经验」这个面试问题，请用STAR原则帮我回答这个问题。针对这个问题，我有的经历如下\[附上经历\]。
 
-## <a href="#5、程式" class="headerlink" title="5、程式"></a>5、程式
+## 5、程式
 
 1、你现在是一个\[程式语言\]专家，请帮我用\[程式语言\]写一个函式，它需要做到\[某个功能\]
 
@@ -89,7 +89,7 @@ categories: []
 
 你现在是一个Regex专家，请帮我写一个Regex，它能够把输入一个字串，把这个字串中的所有数字都取出来
 
-## <a href="#6、知识学习" class="headerlink" title="6、知识学习"></a>6、知识学习
+## 6、知识学习
 
 1、详细的说明\[填入想了解的知识\]
 
@@ -107,7 +107,7 @@ categories: []
 
 教我—元二次方程式，最后给我─个测验
 
-## <a href="#7、英语学习" class="headerlink" title="7、英语学习"></a>7、英语学习
+## 7、英语学习
 
 1、用\[中文/英文\]解释以下英文单字:\[填入一个或多个单字\]。请用表格的方式呈现，并且表格内须包含单字、词性、解释与例句。
 
@@ -135,7 +135,7 @@ Please correct my grammar and spelling mistakes in the text above:附上英文�
 
 Please correct my grammar and spelling mistakes in the text above: I love eat fooded
 
-## <a href="#8、工作生产力" class="headerlink" title="8、工作生产力"></a>8、工作生产力
+## 8、工作生产力
 
 1、回覆Email
 
@@ -143,7 +143,7 @@ Please correct my grammar and spelling mistakes in the text above: I love eat fo
 
 你是一名产品经理，我会给你一封电子邮件，你要回覆这封电子邮件。电子邮件:\[附上内容\]
 
-## <a href="#9、写作帮手" class="headerlink" title="9、写作帮手"></a>9、写作帮手
+## 9、写作帮手
 
 1、撰写标题
 
@@ -167,7 +167,7 @@ Please correct my grammar and spelling mistakes in the text above: I love eat fo
 
 将以下产品关键字生成10句的产品文案。产品关键字∶球鞋、春季最新款、多种颜色、适合慢跑
 
-## <a href="#10、日常生活" class="headerlink" title="10、日常生活"></a>10、日常生活
+## 10、日常生活
 
 1、食谱生成
 
@@ -199,7 +199,7 @@ Please correct my grammar and spelling mistakes in the text above: I love eat fo
 
 生成一份5天的东京旅游计画，交通工具是地铁和火车。要遵守以下规则:1。地点要包含东京铁塔、富士山、迪士尼乐园2。需要包含交通如何乘坐3。—天不超过3个地点。
 
-## <a href="#11、有趣好玩" class="headerlink" title="11、有趣好玩"></a>11、有趣好玩
+## 11、有趣好玩
 
 1、写歌词
 
@@ -217,7 +217,7 @@ Please correct my grammar and spelling mistakes in the text above: I love eat fo
 
 你是现在最红的饶舌歌手，请创作一首Rap，主题是附上主题。你是现在最红的饶舌歌手，请创作一首Rap，主题是孤勇者。
 
-## <a href="#12、角色扮演" class="headerlink" title="12、角色扮演"></a>12、角色扮演
+## 12、角色扮演
 
 1、综合情境
 
@@ -248,5 +248,3 @@ Please correct my grammar and spelling mistakes in the text above: I love eat fo
 你是一位导游，我会把我旅游的位置给你，你要推荐一个靠近我位置的地方。在某些情况下，我还会告诉您我想旅游地点的类型。你还会向我推荐靠近我的第一个位置的类似类型的地方。我的第一个需求是填入需求
 
 你是一位导游，我会把我旅游的位置给你，你要推荐一个靠近我位置的地方。在某些情况下，我还会告诉您我想旅游地点的类型。你还会向我推荐靠近我的第一个位置的类似类型的地方。我的第一个需求是我在阿里山，我想参观博物馆。
-
-- [\#ChatGPT](/tags/ChatGPT/)

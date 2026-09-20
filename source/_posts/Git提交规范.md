@@ -1,8 +1,8 @@
 ---
-title: Git提交规范
+title: "Git提交规范"
 date: 2020-06-24 00:00:00
 tags:
-  - git
+  - "git"
 categories: []
 ---
 **一、背景**
@@ -56,5 +56,3 @@ git log HEAD --grep feat(package.json) # 在package.json文件里新增的特性
 \- 或对代码进行重构，refacto(weChat.vue): 重构微信进件
 
 如果没有更合适的范围，可以直接写提交内容
-
-- [\#git](/tags/git/)
