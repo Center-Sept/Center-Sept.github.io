@@ -3,7 +3,8 @@ title: "Docker镜像加速问题"
 date: 2023-03-27 00:00:00
 tags:
   - "Docker"
-categories: []
+categories:
+  - "运维"  # 分类为 2026-09 回抄后新加，原文无
 ---
 ## 出现问题
 

@@ -95,3 +95,9 @@ theme: butterfly
 
 # Deployment —— ★不用 hexo-deployer-git：发布走 .github/workflows/pages.yml（官方 Actions 做法）
 deploy:
+
+# P2-2：站内搜索索引（hexo-generator-search，hexojs 官方），主题 search.use = local_search 读它
+search:
+  path: search.xml
+  field: post
+  content: true

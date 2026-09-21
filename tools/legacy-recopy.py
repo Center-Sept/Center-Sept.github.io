@@ -17,7 +17,7 @@ r"""legacy-recopy.py —— 把 legacy-site 分支的 15 篇旧文产物 HTML �
   4 懒加载图 <img src="" data-src="URL"> 换成占位段（3 处，全在高级篇，OSS 已 404），文首加一条回抄注
   5 pandoc -f html -t gfm --wrap=none
   6 占位段按其缩进塞回 fenced 块（<li> 里的块 pandoc 会缩进；fence 长度 = 内容里最长反引号串 + 1）
-  7 frontmatter：title = <title> 首段（折叠空白后按 ` | ` 切）；date = 清单日期 + 00:00:00；
+  7 frontmatter：title = <title> 首段（折叠空白后按 ` | ` 切）；date = 清单日期 + 00:00:00；categories = 清单第 8 列（回抄后新加，加注）；
     tags = 文中标签链接文本（旧站原名，如 `SpringCloud|docker|vue`，hexo slugize 后与旧 /tags/ URL 相同）
   8 ★「裸段」：作者在正文里写了字面 `<script src=" 替换 <script src="/static/`，旧 hexo 的 marked 把它当
     HTML 块起点、找不到 </script> ⇒ 后面全文（高级篇末三分之一，43 个代码块）原样吐出，只有代码块被
@@ -78,7 +78,7 @@ def split_raw_tail(body):
     return body[:i], raw
 
 
-def recopy(perm, title_hint, date):
+def recopy(perm, title_hint, date, category=''):
     name = perm.rstrip('/').split('/')[-1]
     h = subprocess.run(['git', '-C', str(REPO), 'show', f'legacy-site:{perm}index.html'],
                        capture_output=True, text=True, check=True).stdout
@@ -153,7 +153,12 @@ def recopy(perm, title_hint, date):
 
     fm = ['---', f'title: {json.dumps(title, ensure_ascii=False)}', f'date: {date} 00:00:00', 'tags:']
     fm += [f'  - {json.dumps(t, ensure_ascii=False)}' for t in tags]
-    fm += ['categories: []', '---']
+    if category:
+        # 分类为 2026-09 回抄后新加，原文无（P1 回执 §九 P2-2：可填一层分类并加注，是归档不是编造）
+        fm += ['categories:', f'  - {json.dumps(category, ensure_ascii=False)}  # 分类为 2026-09 回抄后新加，原文无']
+    else:
+        fm += ['categories: []']
+    fm += ['---']
     out = POSTS / f'{name}.md'
     out.write_text('\n'.join(fm) + '\n' + md.rstrip('\n') + '\n', encoding='utf-8')
     print(f'  ✓ {name}: 代码块 {len(blocks)}（{sum(len(l) for _, l in blocks)} 行）· 剥锚 {n_hl} · 图 {len(imgs)} · tags {tags}')
@@ -165,10 +170,10 @@ def main():
     for line in MANIFEST.read_text(encoding='utf-8').splitlines():
         if line.startswith('#') or not line.strip():
             continue
-        perm, title, date = line.split('\t')[:3]
+        cols = line.split('\t'); perm, title, date = cols[:3]; category = cols[7] if len(cols) > 7 else ''
         if only and perm.rstrip('/').split('/')[-1] != only:
             continue
-        recopy(perm, title, date)
+        recopy(perm, title, date, category)
         n += 1
     if not only and n != 15:
         die(f'清单不是 15 篇：{n}')

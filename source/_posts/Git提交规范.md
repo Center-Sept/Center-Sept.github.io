@@ -3,7 +3,8 @@ title: "Git提交规范"
 date: 2020-06-24 00:00:00
 tags:
   - "git"
-categories: []
+categories:
+  - "工具"  # 分类为 2026-09 回抄后新加，原文无
 ---
 **一、背景**
 

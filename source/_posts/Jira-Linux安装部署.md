@@ -3,7 +3,8 @@ title: "Jira Linux安装部署"
 date: 2022-05-24 00:00:00
 tags:
   - "JIRA|Centos7"
-categories: []
+categories:
+  - "运维"  # 分类为 2026-09 回抄后新加，原文无
 ---
 # Jira Linux安装部署
 

@@ -3,7 +3,8 @@ title: "Java 8 stream"
 date: 2023-03-24 00:00:00
 tags:
   - "java8"
-categories: []
+categories:
+  - "Java"  # 分类为 2026-09 回抄后新加，原文无
 ---
 ## Java 8 stream
 

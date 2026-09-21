@@ -3,7 +3,8 @@ title: "Mysql主从同步搭建"
 date: 2022-04-25 00:00:00
 tags:
   - "Mysql|主从同步"
-categories: []
+categories:
+  - "运维"  # 分类为 2026-09 回抄后新加，原文无
 ---
 ## 概念
 

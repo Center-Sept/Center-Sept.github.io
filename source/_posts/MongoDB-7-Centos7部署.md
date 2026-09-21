@@ -3,7 +3,8 @@ title: "MongoDB_7 Centos7部署"
 date: 2023-09-11 00:00:00
 tags:
   - "MongoDB | 安装&部署"
-categories: []
+categories:
+  - "运维"  # 分类为 2026-09 回抄后新加，原文无
 ---
 # MongoDB_7 Centos7部署
 

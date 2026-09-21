@@ -3,7 +3,8 @@ title: "Docker快速搭建Zookeeper和kafka集群"
 date: 2021-07-24 00:00:00
 tags:
   - "docker|kafka|zookeeper"
-categories: []
+categories:
+  - "运维"  # 分类为 2026-09 回抄后新加，原文无
 ---
 # 安装
 

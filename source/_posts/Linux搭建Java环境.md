@@ -3,7 +3,8 @@ title: "Linux搭建Java环境"
 date: 2021-04-25 00:00:00
 tags:
   - "Java|Linux"
-categories: []
+categories:
+  - "运维"  # 分类为 2026-09 回抄后新加，原文无
 ---
 1.  查看linux位数
 

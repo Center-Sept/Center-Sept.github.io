@@ -3,7 +3,8 @@ title: "CentOS 7 TAR包安装Mysql"
 date: 2021-04-25 00:00:00
 tags:
   - "Mysql|centos"
-categories: []
+categories:
+  - "运维"  # 分类为 2026-09 回抄后新加，原文无
 ---
 ```bash
 # 去官网下载需要的tar包

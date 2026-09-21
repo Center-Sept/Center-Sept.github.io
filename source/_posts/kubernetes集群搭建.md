@@ -3,7 +3,8 @@ title: "kubernetes集群搭建"
 date: 2022-05-05 00:00:00
 tags:
   - "kubernetes"
-categories: []
+categories:
+  - "运维"  # 分类为 2026-09 回抄后新加，原文无
 ---
 ## 环境准备
 

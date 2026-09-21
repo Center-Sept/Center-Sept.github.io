@@ -3,7 +3,8 @@ title: "ChatGPT使用指南"
 date: 2023-09-07 00:00:00
 tags:
   - "ChatGPT"
-categories: []
+categories:
+  - "工具"  # 分类为 2026-09 回抄后新加，原文无
 ---
 # ChatGPT使用指南
 

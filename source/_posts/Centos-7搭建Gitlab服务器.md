@@ -3,7 +3,8 @@ title: "Centos 7搭建Gitlab服务器"
 date: 2022-10-24 00:00:00
 tags:
   - "gitlab|centos7"
-categories: []
+categories:
+  - "运维"  # 分类为 2026-09 回抄后新加，原文无
 ---
 # Centos 7搭建Gitlab服务器
 
