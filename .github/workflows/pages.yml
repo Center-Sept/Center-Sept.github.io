@@ -51,6 +51,12 @@ jobs:
           done < tools/legacy-manifest.tsv
           test "$n" -eq 15 || { echo "清单不是 15 篇：$n"; exit 1; }
           echo "15 篇旧目录在位"
+      - name: "★ B3（P2-2 回执）：导航五项指向的页面都生成了（分类/标签缺 source/<名>/index.md 时静默 404）"
+        run: |
+          for p in about archives categories tags; do
+            test -f "public/$p/index.html" || { echo "缺 public/$p/index.html —— 导航链接会 404"; exit 1; }
+          done
+          echo "导航四页在位（首页由 hexo-generator-index 保证）"
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
