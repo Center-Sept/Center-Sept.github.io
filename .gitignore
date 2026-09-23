@@ -6,3 +6,5 @@ node_modules/
 public/
 .deploy*/
 _multiconfig.yml
+# lighthouse 跑 headless chrome 时按 LOCALAPPDATA 建的临时 profile（WSL 下会落成 Windows 风格路径名）
+C:\\Users\\*
