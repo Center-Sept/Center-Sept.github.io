@@ -1,0 +1,22 @@
+/* P2-2 补充（主人 2026-09-23「背景图不太行，想要更科技感的动图」）：
+   ① 首页头图 = 深色渐变 + 星点，零图片文件；
+   ② 头图**半透明**，让底层 canvas_nest 的粒子连线透上来
+      （canvas zIndex: -1 在 body 背景层，头图不透明会整块盖住它 —— 实测改前只在页尾露两三个点）；
+   ③ body 深色**只在暗色模式**生效：亮色模式下 body 是正文区底色，设深色会让卡片间隙发黑。
+   只改 #page-header 背景与暗色模式 body 底色，不动字体与配色变量（裁定表「字体/配色不改」）。 */
+:root[data-theme="dark"] body,
+[data-theme="dark"] body {
+  background-color: #0b1020;
+}
+#page-header {
+  background-color: transparent !important;
+  background-image:
+    radial-gradient(1px 1px at 18% 28%, rgba(180,215,255,.9), transparent 60%),
+    radial-gradient(1px 1px at 72% 18%, rgba(180,215,255,.75), transparent 60%),
+    radial-gradient(1.6px 1.6px at 44% 62%, rgba(205,230,255,.85), transparent 60%),
+    radial-gradient(1px 1px at 86% 68%, rgba(150,195,255,.65), transparent 60%),
+    radial-gradient(1px 1px at 10% 78%, rgba(150,195,255,.65), transparent 60%),
+    linear-gradient(135deg, rgba(11,16,32,.88) 0%, rgba(19,34,74,.8) 45%, rgba(13,27,58,.88) 100%);
+  background-size: auto, auto, auto, auto, auto, cover;
+}
+#page-header::before { background: transparent !important; }
