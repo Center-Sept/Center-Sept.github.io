@@ -5,6 +5,7 @@ tags:
   - "git"
 categories:
   - "工具"  # 分类为 2026-09 回抄后新加，原文无
+description: "一、背景 ​Git每次提交代码都需要写commit message，否则就不允许提交。一般来说，commit message应该清晰明了，说明本次提交的目的，具体做了什么操作……但是在日常开发中，大家的commit message千奇百怪，…"
 ---
 **一、背景**
 

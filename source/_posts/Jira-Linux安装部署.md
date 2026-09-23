@@ -5,6 +5,7 @@ tags:
   - "JIRA|Centos7"
 categories:
   - "运维"  # 分类为 2026-09 回抄后新加，原文无
+description: "Jira Linux安装部署 · 1.下载安装 · 安装wget · 使用wget 下载jira安装包 · 给安装包赋权 · 执行安装程序 · 根据安装英文提示，做出自定义安装还是使用默认配置安装（略） · 注意安装文字提示的安装目录，便于…"
 ---
 # Jira Linux安装部署
 

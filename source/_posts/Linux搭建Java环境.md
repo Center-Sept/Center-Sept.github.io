@@ -5,6 +5,7 @@ tags:
   - "Java|Linux"
 categories:
   - "运维"  # 分类为 2026-09 回抄后新加，原文无
+description: "查看linux位数 查看linux是32位还是64位，影响需要下载JDK的版本 在linux命令输入： 如果是64位机器，会输出x86_64 下载JDK 下载地址：<a href=\"https://download.oracle.com/o…"
 ---
 1.  查看linux位数
 

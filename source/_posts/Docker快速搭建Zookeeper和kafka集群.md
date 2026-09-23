@@ -5,6 +5,7 @@ tags:
   - "docker|kafka|zookeeper"
 categories:
   - "运维"  # 分类为 2026-09 回抄后新加，原文无
+description: "前提：安装docker和docker-compose 镜像选择 实现目标 拉取镜像 创建集群网络 查看网络 zk集群的docker-compose.yml（任意目录下创建docker-compose.yml文件） kafka集群的docke…"
 ---
 # 安装
 

@@ -5,6 +5,7 @@ tags:
   - "java8"
 categories:
   - "Java"  # 分类为 2026-09 回抄后新加，原文无
+description: "1.使用Collection下的 stream() 和 parallelStream() 方法 2 使用Arrays 中的 stream() 方法，将数组转成流 3.使用Stream中的静态方法：of()、iterate()、generat…"
 ---
 ## Java 8 stream
 

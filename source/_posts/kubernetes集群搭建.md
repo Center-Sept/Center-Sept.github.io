@@ -5,6 +5,7 @@ tags:
   - "kubernetes"
 categories:
   - "运维"  # 分类为 2026-09 回抄后新加，原文无
+description: "1.一台16G及以上的电脑 2.window系统 3.安卓 VMware pro 17 4.分别创建三个centos7 mini 的虚拟主机，硬件配置按需配置最好是2核2G或以上，网络模式使用桥连 5.分别配置好静态ip地址和hostnam…"
 ---
 ## 环境准备
 

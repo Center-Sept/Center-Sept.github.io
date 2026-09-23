@@ -5,6 +5,7 @@ tags:
   - "Mysql|centos"
 categories:
   - "运维"  # 分类为 2026-09 回抄后新加，原文无
+description: "去官网下载需要的tar包 · 解压tar包 · 移到/usr/local 下 · 创建mysql用户组和用户并修改权限 · 配置my.cnf · 初始化数据库 · 注：初始化后能看到随机密码，如果看不到，可以找到log-error的配置位置…"
 ---
 ```bash
 # 去官网下载需要的tar包

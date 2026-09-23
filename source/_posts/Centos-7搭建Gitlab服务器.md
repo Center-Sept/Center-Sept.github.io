@@ -5,6 +5,7 @@ tags:
   - "gitlab|centos7"
 categories:
   - "运维"  # 分类为 2026-09 回抄后新加，原文无
+description: "Centos 7搭建Gitlab服务器 · 安装必要依赖 · 安装Postfix以发送通知邮件 · postfix服务设置成开机自启动 · 启动postfix · 下载rpm安装包 · 安装 · 修改配置文件vi /etc/gitlab/g…"
 ---
 # Centos 7搭建Gitlab服务器
 

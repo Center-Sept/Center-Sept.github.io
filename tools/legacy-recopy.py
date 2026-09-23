@@ -59,6 +59,41 @@ def code_lines(fig_inner):
     return lines
 
 
+def _description(md_text: str, limit: int = 120) -> str:
+    """正文首 limit 字做摘要（P2-4 线 A）。
+
+    去掉代码块、标题、引用、列表符号、图片与链接壳、行内反引号与强调号；
+    合并空白后截断。**只读正文、不改正文** —— 摘要是 frontmatter 的派生量。
+    """
+    out, in_code = [], False
+    for line in md_text.split('\n'):
+        st = line.strip()
+        if st.startswith('```'):
+            in_code = not in_code
+            continue
+        if in_code or not st:
+            continue
+        if st.startswith(('#', '>', '|', '---', ':::')):
+            continue
+        st = re.sub(r'!\[[^\]]*\]\([^)]*\)', '', st)
+        st = re.sub(r'\[([^\]]*)\]\([^)]*\)', r'\1', st)
+        st = re.sub(r'^[-*+]\s+|^\d+\.\s+', '', st)
+        st = st.replace('`', '').replace('**', '').replace('\\', '')
+        st = st.strip()
+        if st:
+            out.append(st)
+        if sum(len(x) for x in out) >= limit:
+            break
+    text = re.sub(r'\s+', ' ', ' '.join(out)).strip()
+    if not text:
+        # 正文几乎全是小标题 + 代码块（实测 4 篇：Docker镜像加速问题 / Jira / Gitlab / CentOS-TAR 装 Mysql）
+        # ⇒ 用小标题序列作摘要。是对真实结构的概括，不编造内容。
+        heads = [re.sub(r'^#+\s*', '', l).strip() for l in md_text.split('\n')
+                 if re.match(r'^#{1,6}\s+\S', l.strip())]
+        text = ' · '.join(dict.fromkeys(h for h in heads if h))
+    return text[:limit].rstrip() + ('…' if len(text) > limit else '')
+
+
 def fence_for(lines):
     longest = max((len(m) for l in lines for m in re.findall(r'`+', l)), default=0)
     return '`' * max(3, longest + 1)
@@ -151,6 +186,9 @@ def recopy(perm, title_hint, date, category=''):
         md = (f'> （回抄注：原文 {len(imgs)} 处图片托管于阿里云 OSS，2026-09-19 实测已 404，图已永久丢失；'
               f'各处原地址留在原位。）\n\n') + md
 
+    # P2-4 线 A（2026-09-23）：description = 正文首 120 字（去代码块/标题/引用/列表符号/链接壳），
+    # 只进 frontmatter，不改正文。消费者：butterfly 卡片摘要 + og:description + sitemap/feed。
+    desc = _description(md)
     fm = ['---', f'title: {json.dumps(title, ensure_ascii=False)}', f'date: {date} 00:00:00', 'tags:']
     fm += [f'  - {json.dumps(t, ensure_ascii=False)}' for t in tags]
     if category:
@@ -158,6 +196,8 @@ def recopy(perm, title_hint, date, category=''):
         fm += ['categories:', f'  - {json.dumps(category, ensure_ascii=False)}  # 分类为 2026-09 回抄后新加，原文无']
     else:
         fm += ['categories: []']
+    if desc:
+        fm.append(f'description: {json.dumps(desc, ensure_ascii=False)}')
     fm += ['---']
     out = POSTS / f'{name}.md'
     out.write_text('\n'.join(fm) + '\n' + md.rstrip('\n') + '\n', encoding='utf-8')

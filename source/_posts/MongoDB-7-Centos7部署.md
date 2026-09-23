@@ -5,6 +5,7 @@ tags:
   - "MongoDB | 安装&部署"
 categories:
   - "运维"  # 分类为 2026-09 回抄后新加，原文无
+description: "操作系统：Linux CentOS 7 安装包：mongodb-linux-x86_64-rhel70-7.0.2-rc1.tgz 1.将下载好的安装包上传到 Linux 服务器某个目录下，并使用以下命令解压压缩包。 2.将解压后的目录移动…"
 ---
 # MongoDB_7 Centos7部署
 

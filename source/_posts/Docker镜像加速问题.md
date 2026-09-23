@@ -5,6 +5,7 @@ tags:
   - "Docker"
 categories:
   - "运维"  # 分类为 2026-09 回抄后新加，原文无
+description: "出现问题 · 解决方法 · 编辑 /etc/docker/daemon.json · 增加如下文本 · 重载配置项 · 重启docker服务"
 ---
 ## 出现问题
 

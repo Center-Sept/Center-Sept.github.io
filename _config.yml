@@ -30,8 +30,10 @@ archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
+# P2-4 线 A：robots.txt 与三家站长验证文件原样输出，不过渲染器
 skip_render:
-
+  - robots.txt
+  - "*.html"   # GSC/Bing/百度验证文件（主人放进 source/ 后原样发布）
 # Writing
 new_post_name: :title.md
 default_layout: post
@@ -101,3 +103,20 @@ search:
   path: search.xml
   field: post
   content: true
+
+# P2-4 线 A（推广，2026-09-23）：搜索引擎收录三件
+# hexo-generator-sitemap / hexo-generator-feed 同属 hexojs 官方（与 generator-search 一个口径）
+sitemap:
+  path: sitemap.xml
+  rel: false
+  tags: true
+  categories: true
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+  hub:
+  content: true
+  content_limit: 300
+  content_limit_delim: ' '
+  order_by: -date

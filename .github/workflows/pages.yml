@@ -51,6 +51,15 @@ jobs:
           done < tools/legacy-manifest.tsv
           test "$n" -eq 15 || { echo "清单不是 15 篇：$n"; exit 1; }
           echo "15 篇旧目录在位"
+      - name: "★ P2-4 线 A：sitemap / atom / robots 三件产物在位且非空"
+        run: |
+          for f in sitemap.xml atom.xml robots.txt; do
+            test -s "public/$f" || { echo "缺 public/$f（或为空）—— 搜索引擎收录三件之一"; exit 1; }
+          done
+          n=$(grep -c '<url>' public/sitemap.xml)
+          test "$n" -ge 20 || { echo "sitemap 只有 $n 条 <url>，少于 20（文章 + 分类 + 标签 + 页面）"; exit 1; }
+          grep -q 'Sitemap: https://blogs.center-sept.top/sitemap.xml' public/robots.txt || { echo "robots.txt 缺 Sitemap: 行"; exit 1; }
+          echo "sitemap $n 条 url · atom $(wc -c < public/atom.xml) 字节 · robots 在位"
       - name: "★ B3（P2-2 回执）：导航五项指向的页面都生成了（分类/标签缺 source/<名>/index.md 时静默 404）"
         run: |
           for p in about archives categories tags; do
@@ -74,3 +83,21 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      # ★ P2-4 线 A：部署成功后把 sitemap 里的 URL 推给百度主动推送接口。
+      #   无 BAIDU_PUSH_TOKEN 时**跳过不红** —— 推广是加分项，缺 token 不该让部署显示失败。
+      - name: "★ P2-4：百度主动推送（无 token 则跳过）"
+        env:
+          BAIDU_PUSH_TOKEN: ${{ secrets.BAIDU_PUSH_TOKEN }}
+        run: |
+          if [ -z "$BAIDU_PUSH_TOKEN" ]; then
+            echo "未配置 Secrets BAIDU_PUSH_TOKEN，跳过百度推送（不判失败）"; exit 0
+          fi
+          curl -sS -m 60 -o sitemap.xml https://blogs.center-sept.top/sitemap.xml
+          grep -o '<loc>[^<]*</loc>' sitemap.xml | sed 's|</\?loc>||g' > urls.txt
+          n=$(wc -l < urls.txt)
+          resp=$(curl -sS -m 60 -X POST --data-binary @urls.txt \
+            "http://data.zz.baidu.com/urls?site=https://blogs.center-sept.top&token=$BAIDU_PUSH_TOKEN" \
+            -H 'Content-Type: text/plain') || { echo "推送请求失败：$resp"; exit 1; }
+          echo "提交 $n 条，接口返回：$resp"
+          echo "$resp" | grep -q '"success"' || { echo "接口未返回 success —— 看上面的 message/error"; exit 1; }
+          echo "成功推送 $(echo "$resp" | python3 -c "import sys,json;print(json.load(sys.stdin).get('success'))") 条"

@@ -5,6 +5,7 @@ tags:
   - "Mysql|主从同步"
 categories:
   - "运维"  # 分类为 2026-09 回抄后新加，原文无
+description: "master 将变动记录到二进制日志文件（binary log）中，即配置文件中 log-bin 指定的文件，这些记录叫做二进制日志事件(binary log events)； master 将二进制日志文件发送给 slave； slave…"
 ---
 ## 概念
 
