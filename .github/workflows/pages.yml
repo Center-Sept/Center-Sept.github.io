@@ -118,10 +118,8 @@ jobs:
           print('\n'.join(seen))
           PYEOF
           echo "::warning::本次 push 含 $(python3 -c "import json,os;print(len(json.loads(os.environ.get('COMMITS_JSON') or '[]')))") 个提交（payload commits[] 上限 20；接近 20 说明合批过大，变更文件可能被截断）"
-          # ★补推（回执 2026-09-24 §二十六）：茅台那篇掉在两次 run 之间 ——
-          #   丙-2 那次撞浅克隆 bug 没推，修正那次是配置提交无可推。**不为它做机制**，一次性补进列表。
-          #   补完把下面这个 EXTRA_URLS 连同本注释一起删掉。
-          EXTRA_URLS="https://blogs.center-sept.top/2026/04/20/moutai-600519-premarket-2026-04-20/"
+          # ★一次性补推已于 2026-09-24 run 35960766690 完成（推 1 条、剩余配额 8），按回执「不为它做机制」连代码一并撤走。
+          EXTRA_URLS=""
           changed=$(cat changed.txt)
           if [ -z "$changed" ] && [ -z "$EXTRA_URLS" ]; then
             echo "::warning::本次无文章变更（只动了配置/工作流），未推 —— 配额留给真正的新文"; exit 0
