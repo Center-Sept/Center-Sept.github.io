@@ -95,17 +95,19 @@ jobs:
           if [ -z "$BAIDU_PUSH_TOKEN" ]; then
             echo "未配置 Secrets BAIDU_PUSH_TOKEN，跳过百度推送"; exit 0
           fi
-          echo "token 长度 ${#BAIDU_PUSH_TOKEN}（只报长度不报值；若不是 12 位左右，多半复制时带了空格或换行）"
+          # ★用 ::warning:: 而不是 echo：warning 进 annotations，**匿名 API 读得到**；
+          #   普通 echo 只进日志，要登录才看得见 —— 诊断信息读不到就等于没有。
+          echo "::warning::token 长度 ${#BAIDU_PUSH_TOKEN}（只报长度不报值；百度 token 通常 12 位，明显偏长多半带了空格或换行）"
           curl -sS -m 60 -o sitemap.xml https://blogs.center-sept.top/sitemap.xml
           grep -o '<loc>[^<]*</loc>' sitemap.xml | sed 's|</\?loc>||g' > urls.txt
           n=$(wc -l < urls.txt)
-          echo "sitemap 取到 $n 条 URL，前 2 条："; head -2 urls.txt
-          for site in "https://blogs.center-sept.top" "blogs.center-sept.top"; do
+          echo "::warning::sitemap 取到 $n 条 URL，首条 $(head -1 urls.txt)"
+          for site in "https://blogs.center-sept.top" "blogs.center-sept.top" "https://blogs.center-sept.top/"; do
             echo "── 试 site=$site"
             resp=$(curl -sS -m 60 -X POST --data-binary @urls.txt \
               "http://data.zz.baidu.com/urls?site=$site&token=$BAIDU_PUSH_TOKEN" \
               -H 'Content-Type: text/plain') || resp='{"error":-1,"message":"curl 失败"}'
-            echo "接口返回：$resp"
+            echo "::warning::site=$site 接口返回：$resp"
             if echo "$resp" | grep -q '"success"'; then
               echo "成功推送 $(echo "$resp" | python3 -c "import sys,json;print(json.load(sys.stdin).get('success'))") 条（site=$site）"
               exit 0
