@@ -41,6 +41,12 @@ jobs:
         run: npm run build
       - name: "★ 负对照 ④：产物根必须有 CNAME 且内容相等，否则这次部署会把自定义域名冲掉"
         run: test -f public/CNAME && test "$(cat public/CNAME)" = "blogs.center-sept.top"
+      - name: "★ C18：两份站长验证文件必须在产物里（删了就掉验证）"
+        run: |
+          for f in google8e02ec5b10c1e8b6.html baidu_verify_codeva-le0FLPCT2F.html; do
+            test -s "public/$f" || { echo "缺 public/$f —— 该文件一旦从 source/ 消失，对应搜索引擎的所有权验证立刻失效"; exit 1; }
+          done
+          echo "GSC 与百度验证文件都在产物里"
       - name: "★ 派②：15 篇旧 permalink 目录都生成了（读 tools/legacy-manifest.tsv）"
         run: |
           n=0
@@ -85,49 +91,49 @@ jobs:
         uses: actions/deploy-pages@v4
       # ★ P2-4 线 A：部署成功后把 sitemap 里的 URL 推给百度主动推送接口。
       #   无 BAIDU_PUSH_TOKEN 时**跳过不红** —— 推广是加分项，缺 token 不该让部署显示失败。
-      - name: "★ P2-4：百度主动推送（无 token 跳过；推送失败只告警不判 job 红）"
+      - name: "★ P2-4：百度主动推送（只推本次变更的文章；无 token 跳过；失败只告警不判红）"
         env:
           BAIDU_PUSH_TOKEN: ${{ secrets.BAIDU_PUSH_TOKEN }}
           PUSH_LIMIT: "10"
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
         run: |
-          # ★2026-09-24 两处实测修正：
-          #   ① 推送失败**不判 job 红** —— 部署是主线、推广是加分项，站点已发出去了还显示 failure 会误导。
-          #   ② **只推最新 PUSH_LIMIT 篇文章**，不推整个 sitemap。实测推 125 条得
-          #      {"error":400,"message":"over quota"}：百度主动推送按站点每日配额计，新站配额很小，
-          #      一次全量推会把当天额度一次性烧光，而**真正需要被快速抓取的只有新发的那几篇**。
-          #   ③ 诊断走 ::warning::（进 annotations，匿名 API 读得到）；普通 echo 只进日志，要登录才看得见。
+          # ★C17（2026-09-24 回执）：推**本次 push 新增/修改的文章**，不是「最新 N 篇」。
+          #   「最新 N 篇」在配置类部署上会反复推同一批老文 —— 今天四次调试部署就是实证，
+          #   当天配额被烧光后接口一直 over quota。配额是稀缺量，只该花在**真正变了的**文章上。
+          #   无文章变更 ⇒ 不推，并注明原因（「没推」与「推失败」是两件事，要能分辨）。
           if [ -z "$BAIDU_PUSH_TOKEN" ]; then
             echo "未配置 Secrets BAIDU_PUSH_TOKEN，跳过百度推送"; exit 0
           fi
-          curl -sS -m 60 -o sitemap.xml https://blogs.center-sept.top/sitemap.xml
-          # 只取文章 URL（/yyyy/mm/dd/slug/），按 sitemap 里的 lastmod 倒序，取前 N 条
-          python3 - <<'PYEOF' > urls.txt
-          import re
-          t = open('sitemap.xml', encoding='utf-8').read()
-          items = []
-          for m in re.finditer(r'<url>(.*?)</url>', t, re.S):
-              b = m.group(1)
-              loc = re.search(r'<loc>(.*?)</loc>', b)
-              mod = re.search(r'<lastmod>(.*?)</lastmod>', b)
-              if loc and re.search(r'/\d{4}/\d{2}/\d{2}/', loc.group(1)):
-                  items.append((mod.group(1) if mod else '', loc.group(1)))
-          items.sort(reverse=True)
-          for _d, u in items[:int(__import__('os').environ.get('PUSH_LIMIT', '10'))]:
-              print(u)
-          PYEOF
+          git fetch --depth=50 origin "$AFTER" 2>/dev/null || true
+          if [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ] || ! git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+            echo "::warning::取不到 push 前的 sha（首推或历史被截断），本次不推，避免全量烧配额"; exit 0
+          fi
+          changed=$(git diff --name-only --diff-filter=AM "$BEFORE" "$AFTER" -- 'source/_posts/*.md' || true)
+          if [ -z "$changed" ]; then
+            echo "::warning::本次无文章变更（只动了配置/工作流），未推 —— 配额留给真正的新文"; exit 0
+          fi
+          : > urls.txt
+          while IFS= read -r f; do
+            [ -f "$f" ] || continue
+            slug=$(basename "$f" .md)
+            d=$(sed -n 's/^date:[ ]*\([0-9-]\{10\}\).*/\1/p' "$f" | head -1 | tr '-' '/')
+            [ -n "$d" ] && echo "https://blogs.center-sept.top/$d/$slug/" >> urls.txt
+          done <<< "$changed"
+          head -n "$PUSH_LIMIT" urls.txt > u.txt && mv u.txt urls.txt
           n=$(wc -l < urls.txt)
-          echo "::warning::本次推送 $n 条（文章 URL，按 lastmod 取最新；sitemap 共 $(grep -c '<loc>' sitemap.xml) 条不全推，避免 over quota）"
+          [ "$n" -gt 0 ] || { echo "::warning::变更的文章取不出 permalink（date 读不到），未推"; exit 0; }
+          echo "::warning::本次变更 $(echo "$changed" | wc -l) 篇，推送 $n 条：$(tr '\n' ' ' < urls.txt)"
           for site in "https://blogs.center-sept.top" "blogs.center-sept.top"; do
             resp=$(curl -sS -m 60 -X POST --data-binary @urls.txt \
               "http://data.zz.baidu.com/urls?site=$site&token=$BAIDU_PUSH_TOKEN" \
               -H 'Content-Type: text/plain') || resp='{"error":-1,"message":"curl 失败"}'
             if echo "$resp" | grep -q '"success"'; then
-              echo "::warning::成功推送 $(echo "$resp" | python3 -c "import sys,json;print(json.load(sys.stdin).get('success'))") 条，剩余配额 $(echo "$resp" | python3 -c "import sys,json;print(json.load(sys.stdin).get('remain'))")（site=$site）"
+              echo "::warning::成功推送 $(echo "$resp" | python3 -c "import sys,json;print(json.load(sys.stdin).get('success'))") 条，今日剩余配额 $(echo "$resp" | python3 -c "import sys,json;print(json.load(sys.stdin).get('remain'))")（site=$site）"
               exit 0
             fi
             echo "::warning::site=$site 接口返回：$resp"
           done
           echo "::warning::百度推送未成功（站点已正常部署，本步不判失败）。对照："
-          echo "::warning::over quota = 当日配额用尽，明天自动恢复；配额随收录量增长，新站很小，本步已限为每次 $n 条"
-          echo "::warning::token invalid = token 不对或带空白；error 401 = site 与站长平台登记的不一致"
+          echo "::warning::over quota = 当日配额用尽，次日恢复；token invalid = token 不对或带空白；401 = site 与站长平台登记的不一致"
           exit 0
