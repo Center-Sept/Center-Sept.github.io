@@ -85,19 +85,33 @@ jobs:
         uses: actions/deploy-pages@v4
       # ★ P2-4 线 A：部署成功后把 sitemap 里的 URL 推给百度主动推送接口。
       #   无 BAIDU_PUSH_TOKEN 时**跳过不红** —— 推广是加分项，缺 token 不该让部署显示失败。
-      - name: "★ P2-4：百度主动推送（无 token 则跳过）"
+      - name: "★ P2-4：百度主动推送（无 token 跳过；推送失败只告警不判 job 红）"
         env:
           BAIDU_PUSH_TOKEN: ${{ secrets.BAIDU_PUSH_TOKEN }}
         run: |
+          # ★2026-09-24 改：**推送失败不再让 deploy job 红**。
+          #   部署是主线、推广是加分项；推送失败时站点已经发出去了，让整个 job 显示 failure
+          #   会误导下一个看板子的人以为「站没发出去」。失败走 ::warning:: 并把接口原样返回打出来。
           if [ -z "$BAIDU_PUSH_TOKEN" ]; then
-            echo "未配置 Secrets BAIDU_PUSH_TOKEN，跳过百度推送（不判失败）"; exit 0
+            echo "未配置 Secrets BAIDU_PUSH_TOKEN，跳过百度推送"; exit 0
           fi
+          echo "token 长度 ${#BAIDU_PUSH_TOKEN}（只报长度不报值；若不是 12 位左右，多半复制时带了空格或换行）"
           curl -sS -m 60 -o sitemap.xml https://blogs.center-sept.top/sitemap.xml
           grep -o '<loc>[^<]*</loc>' sitemap.xml | sed 's|</\?loc>||g' > urls.txt
           n=$(wc -l < urls.txt)
-          resp=$(curl -sS -m 60 -X POST --data-binary @urls.txt \
-            "http://data.zz.baidu.com/urls?site=https://blogs.center-sept.top&token=$BAIDU_PUSH_TOKEN" \
-            -H 'Content-Type: text/plain') || { echo "推送请求失败：$resp"; exit 1; }
-          echo "提交 $n 条，接口返回：$resp"
-          echo "$resp" | grep -q '"success"' || { echo "接口未返回 success —— 看上面的 message/error"; exit 1; }
-          echo "成功推送 $(echo "$resp" | python3 -c "import sys,json;print(json.load(sys.stdin).get('success'))") 条"
+          echo "sitemap 取到 $n 条 URL，前 2 条："; head -2 urls.txt
+          for site in "https://blogs.center-sept.top" "blogs.center-sept.top"; do
+            echo "── 试 site=$site"
+            resp=$(curl -sS -m 60 -X POST --data-binary @urls.txt \
+              "http://data.zz.baidu.com/urls?site=$site&token=$BAIDU_PUSH_TOKEN" \
+              -H 'Content-Type: text/plain') || resp='{"error":-1,"message":"curl 失败"}'
+            echo "接口返回：$resp"
+            if echo "$resp" | grep -q '"success"'; then
+              echo "成功推送 $(echo "$resp" | python3 -c "import sys,json;print(json.load(sys.stdin).get('success'))") 条（site=$site）"
+              exit 0
+            fi
+          done
+          echo "::warning::百度推送未成功（站点已正常部署，本步不判失败）。上面的「接口返回」即原因："
+          echo "::warning::error 400 token invalid = token 不对或带了空白；error 401 = site 与站长平台登记的不一致；"
+          echo "::warning::error 404 = 站点未在站长平台验证通过。对照 https://ziyuan.baidu.com 的「普通收录 → API 提交」页重取。"
+          exit 0
