@@ -117,11 +117,20 @@ jobs:
                       seen.append(f)
           print('\n'.join(seen))
           PYEOF
+          echo "::warning::本次 push 含 $(python3 -c "import json,os;print(len(json.loads(os.environ.get('COMMITS_JSON') or '[]')))") 个提交（payload commits[] 上限 20；接近 20 说明合批过大，变更文件可能被截断）"
+          # ★补推（回执 2026-09-24 §二十六）：茅台那篇掉在两次 run 之间 ——
+          #   丙-2 那次撞浅克隆 bug 没推，修正那次是配置提交无可推。**不为它做机制**，一次性补进列表。
+          #   补完把下面这个 EXTRA_URLS 连同本注释一起删掉。
+          EXTRA_URLS="https://blogs.center-sept.top/2026/04/20/moutai-600519-premarket-2026-04-20/"
           changed=$(cat changed.txt)
-          if [ -z "$changed" ]; then
+          if [ -z "$changed" ] && [ -z "$EXTRA_URLS" ]; then
             echo "::warning::本次无文章变更（只动了配置/工作流），未推 —— 配额留给真正的新文"; exit 0
           fi
           : > urls.txt
+          if [ -n "$EXTRA_URLS" ]; then
+            printf '%s\n' $EXTRA_URLS >> urls.txt
+            echo "::warning::补推 $(printf '%s\n' $EXTRA_URLS | wc -l) 条（掉在 2026-09-24 两次 run 之间的文章）"
+          fi
           while IFS= read -r f; do
             [ -f "$f" ] || continue
             slug=$(basename "$f" .md)
@@ -131,7 +140,7 @@ jobs:
           head -n "$PUSH_LIMIT" urls.txt > u.txt && mv u.txt urls.txt
           n=$(wc -l < urls.txt)
           [ "$n" -gt 0 ] || { echo "::warning::变更的文章取不出 permalink（date 读不到），未推"; exit 0; }
-          echo "::warning::本次变更 $(echo "$changed" | wc -l) 篇，推送 $n 条：$(tr '\n' ' ' < urls.txt)"
+          echo "::warning::本次变更 $([ -n "$changed" ] && echo "$changed" | wc -l || echo 0) 篇 + 补推，合计推送 $n 条：$(tr '\n' ' ' < urls.txt)"
           for site in "https://blogs.center-sept.top" "blogs.center-sept.top"; do
             resp=$(curl -sS -m 60 -X POST --data-binary @urls.txt \
               "http://data.zz.baidu.com/urls?site=$site&token=$BAIDU_PUSH_TOKEN" \
