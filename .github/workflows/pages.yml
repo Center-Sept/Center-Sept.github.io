@@ -95,8 +95,7 @@ jobs:
         env:
           BAIDU_PUSH_TOKEN: ${{ secrets.BAIDU_PUSH_TOKEN }}
           PUSH_LIMIT: "10"
-          BEFORE: ${{ github.event.before }}
-          AFTER: ${{ github.sha }}
+          COMMITS_JSON: ${{ toJSON(github.event.commits) }}
         run: |
           # ★C17（2026-09-24 回执）：推**本次 push 新增/修改的文章**，不是「最新 N 篇」。
           #   「最新 N 篇」在配置类部署上会反复推同一批老文 —— 今天四次调试部署就是实证，
@@ -105,11 +104,20 @@ jobs:
           if [ -z "$BAIDU_PUSH_TOKEN" ]; then
             echo "未配置 Secrets BAIDU_PUSH_TOKEN，跳过百度推送"; exit 0
           fi
-          git fetch --depth=50 origin "$AFTER" 2>/dev/null || true
-          if [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ] || ! git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
-            echo "::warning::取不到 push 前的 sha（首推或历史被截断），本次不推，避免全量烧配额"; exit 0
-          fi
-          changed=$(git diff --name-only --diff-filter=AM "$BEFORE" "$AFTER" -- 'source/_posts/*.md' || true)
+          # ★2026-09-24 实测：actions/checkout 是**浅克隆**，`git cat-file -e $BEFORE` 一定失败
+          #   ⇒ 原先那条「取不到 push 前 sha 就不推」的兜底会**每次都命中**，推送形同废掉。
+          #   改用 push 事件 payload 自带的 commits[].added/modified —— 它不依赖本地 git 历史。
+          python3 - <<'PYEOF' > changed.txt
+          import json, os
+          commits = json.loads(os.environ.get('COMMITS_JSON') or '[]')
+          seen = []
+          for c in commits:
+              for f in (c.get('added') or []) + (c.get('modified') or []):
+                  if f.startswith('source/_posts/') and f.endswith('.md') and f not in seen:
+                      seen.append(f)
+          print('\n'.join(seen))
+          PYEOF
+          changed=$(cat changed.txt)
           if [ -z "$changed" ]; then
             echo "::warning::本次无文章变更（只动了配置/工作流），未推 —— 配额留给真正的新文"; exit 0
           fi
